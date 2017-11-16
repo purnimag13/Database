@@ -4,7 +4,7 @@ import java.util.Stack;
 /**
  * This is the generic version of the binary search tree. 
  * 
- * @author Alexander Bochel and Purnima Ghosh
+ * @author Purnima Ghosh and Tara Laughlin
  * @version 10/29/2017
  * @param <T> The generic parameter. 
  */
