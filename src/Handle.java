@@ -9,7 +9,7 @@
  * @version Nov 16, 2017
  *
  */
-public class Handle 
+public class Handle implements Comparable 
 {
     private int off;
     private int len;
@@ -70,6 +70,23 @@ public class Handle
     public int byteCalculation()
     {
         return (len + 3) / 4;   
+    }
+    
+    //@Override
+    public int compareTo(Handle hand) 
+    {
+        if (this.getOff() < hand.getOff())
+        {
+            return -1;
+        }
+        else if (this.getOff() > hand.getOff())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
     
 
