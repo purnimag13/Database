@@ -8,19 +8,24 @@ import java.util.Scanner;
 public class DataBase 
 {
     Scanner fileScanner;
-    //byte[] massiveByteArr;
     ArrayList<Byte> massiveByteArr;
     int resize = 0;
     
     HashTable hashArtist;
     HashTable hashSong;
-    //this class is gonna take care of array stuff like making it and all dat
+    
+    KVTree artistTree;
+    KVTree songTree;
+    
+    
     public DataBase()
     {
-        //massiveByteArr = new byte[resize];
         massiveByteArr = new ArrayList<>();
         hashArtist = new HashTable();
         hashSong = new HashTable();
+        
+        artistTree = new KVTree();
+        songTree = new KVTree();
     }
     
     public void readFile(String fileName) throws FileNotFoundException
@@ -35,14 +40,55 @@ public class DataBase
             String instruction = fileScanner.next();
             if (instruction.equals("insert"))
             {
+               insert(); 
+            }
+            else if (instruction.equals("remove"))
+            {
+                //Remove the specified artist or song name from the appropriate hash table, 2-3+ (or BST)
+                //tree and make corresponding marks in the memory.
+                if (fileScanner.next() == "artist")
+                {
+                    
+                }
+                else if (fileScanner.next() == "song")
+                {
+                    
+                }
+            }
+            else if (instruction.equals("print"))
+            {
+                if (fileScanner.next() == "artist")
+                {
+                    
+                }
+                else if (fileScanner.next() == "song")
+                {
+                    
+                }
+                else if (fileScanner.next() == "tree")
+                {
+                    //in order traversal of tree
+                }
+            }
+            else if (instruction.equals("list"))
+            {
                 
+            }
+            else if (instruction.equals("delete"))
+            {
+                //Delete the specific record for this particular song by this particular artist
             }
 
             
         }
         
     }
-    public void insert()
+    
+    /**
+     * unfinished - still need to insert KV into BST
+     * @return
+     */
+    public boolean insert()
     {
         StringBuilder artist = new StringBuilder();
         StringBuilder songTitle = new StringBuilder();
@@ -56,35 +102,35 @@ public class DataBase
         {
            songTitle.append(fileScanner.next()); 
         }
-        //these strings can be turned into bytes which can be
+        
         String artistString = artist.toString();
         String songTitleString = songTitle.toString();
-        //inserted into our byte array
+        
         byte[] songBytes = songTitleString.getBytes();
         byte[] artistBytes = artistString.getBytes();
         
         int lengthOfArtist = artistBytes.length;
         int lengthOfSong = songBytes.length;
-        
-//        resize += (3 + lengthOfArtist + lengthOfSong);
-//        massiveByteArr = Arrays.copyOf(massiveByteArr, massiveByteArr.length + resize);
-//        for (int i = 0; i < resize; i++)
-//        {
-//            
-//        }
-        int s = 1;
-        massiveByteArr.add((byte) s);
-        
-        massiveByteArr.add((byte) (lengthOfArtist + lengthOfSong));
+        int s1 = 1;
+        massiveByteArr.add((byte) s1);
+        massiveByteArr.add((byte) lengthOfArtist);
         for (int k = 0; k < artistBytes.length; k++)
         {
             massiveByteArr.add(artistBytes[k]);
         }
+        
+        int s2 = 1;
+        massiveByteArr.add((byte) s2);
+        massiveByteArr.add((byte) lengthOfSong);
         for (int k = 0; k < songBytes.length; k++)
         {
             massiveByteArr.add(songBytes[k]);
         }
-        Handle hand = new Handle(massiveByteArr.indexOf(s), (lengthOfArtist + lengthOfSong));
+        Handle handArtist = new Handle(massiveByteArr.indexOf(s1), (lengthOfArtist + artistBytes.length + 1));
+        Handle handSong = new Handle(massiveByteArr.indexOf(s2), (lengthOfSong + songBytes.length + 1));
+        //STILL NEED TO INSERT KV PAIRS
+        return hashArtist.insert(artistString, handArtist) ||
+                hashSong.insert(songTitleString, handSong);
         
     }
 }
