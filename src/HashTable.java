@@ -121,6 +121,14 @@ public class HashTable
         return table[slot] != null;
     }
     /**
+     * checks if the table is empty or not
+     * @return boolean true if nothing in table
+     */
+    public boolean isEmpty()
+    {
+        return size == 0;
+    }
+    /**
      * The entry class that takes a generic key and generic value
      * @author Purnima Ghosh and Tara Laughlin
      * @version Nov 19, 2017

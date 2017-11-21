@@ -9,7 +9,7 @@
  * @version Nov 16, 2017
  *
  */
-public class Handle implements Comparable 
+public class Handle implements Comparable<Handle> 
 {
     private int off;
     private int len;
@@ -51,9 +51,9 @@ public class Handle implements Comparable
      * sets the length of offset
      * @param len length
      */
-    public void setLen(int len) 
+    public void setLen(int length) 
     {
-        this.len = len;
+        this.len = length;
     }
     /**
      * compares if two handles are equal
@@ -65,14 +65,7 @@ public class Handle implements Comparable
         return off == hand.getOff() && len == hand.getLen();
     }
     
-    
-    // I DONT KNOW IF WE NEED THIS YET BUT WE CAN KEEP IT FOR NOW
-    public int byteCalculation()
-    {
-        return (len + 3) / 4;   
-    }
-    
-    //@Override
+    @Override
     public int compareTo(Handle hand) 
     {
         if (this.getOff() < hand.getOff())
