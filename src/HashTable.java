@@ -9,11 +9,11 @@
 public class HashTable
 {
     private Entry[] table;
-    
+
     private int capacity;
-    
+
     private int size;
-    
+
     public HashTable(int initSize)
     {
         table = new Entry[initSize];
@@ -58,7 +58,7 @@ public class HashTable
     public Handle get(String key)
     {
         Handle h = null;
-        
+
         for (int i = 0; i < capacity; i++)
         {
             if (table[i].getKey() == key)
@@ -66,7 +66,7 @@ public class HashTable
                 return table[i].getValue();
             }
         }
-        
+
         return h;
     }
     /**
@@ -81,7 +81,7 @@ public class HashTable
         int hashSlot = hashFunc(k, capacity);
         //number of times probing has occurred
         int probeCount = 0;
-        
+
         while(table[hashSlot] != null)
         {
             probeCount++;
@@ -115,10 +115,35 @@ public class HashTable
                 insert(temp[i].getKey(), temp[i].getValue());
             }
         }
-        int slot = quadProbing(k);
-        table[slot] = new Entry(k, v);
-        size++;
-        return table[slot] != null;
+        //Checks to see if key is already in the table
+        if (get(k) != null)
+        {
+            int slot = quadProbing(k);
+            table[slot] = new Entry(k, v);
+            size++;
+            return table[slot] != null;
+        }
+        return false;
+    }
+    /**
+     * Removes an item from the hash table
+     * @param key the string that you're searching for
+     * @return the value that was removed
+     */
+    public Handle remove(String key)
+    {
+        Handle h = null;
+
+        for (int i = 0; i < capacity; i++)
+        {
+            if (table[i].getKey() == key)
+            {
+                h = table[i].getValue();
+                table[i] = null;
+            }
+        }
+
+        return h;
     }
     /**
      * checks if the table is empty or not
@@ -140,13 +165,13 @@ public class HashTable
     {
         private String key;
         private Handle value;
-        
+
         public Entry(String k, Handle v)
         {
             this.key = k;
             this.value = v;
         }
-        
+
         public String getKey() 
         {
             return key;
@@ -167,8 +192,8 @@ public class HashTable
             this.value = value;
         }
 
-        
+
     }
-    
+
 
 }
