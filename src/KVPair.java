@@ -17,7 +17,33 @@ public class KVPair implements Comparable<KVPair>
         key = k;
         value = v;
     }
+    /**
+     * @return the key
+     */
+    public Handle getKey() {
+        return key;
+    }
 
+    /**
+     * @param key the key to set
+     */
+    public void setKey(Handle key) {
+        this.key = key;
+    }
+
+    /**
+     * @return the value
+     */
+    public Handle getValue() {
+        return value;
+    }
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(Handle value) {
+        this.value = value;
+    }
     /**
      * This method compares two KVPair objects and returns
      * the proper ordering
@@ -49,5 +75,4 @@ public class KVPair implements Comparable<KVPair>
             return 0;
         }
     }
-
 }
