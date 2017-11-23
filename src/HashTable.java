@@ -147,6 +147,19 @@ public class HashTable
         return h;
     }
     /**
+     * This method prints every non null item in the hash table
+     */
+    public void print()
+    {
+        for (int i = 0; i < this.capacity; i++)
+        {
+            if (table[i].getKey() != null)
+            {
+                System.out.println(table[i].getKey());
+            }
+        }
+    }
+    /**
      * checks if the table is empty or not
      * @return boolean true if nothing in table
      */
