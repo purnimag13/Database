@@ -126,7 +126,8 @@ public class HashTable
         return false;
     }
     /**
-     * Removes an item from the hash table
+     * Removes items from the hash table if their key matches the key being
+     * searched for
      * @param key the string that you're searching for
      * @return the value that was removed
      */
@@ -136,7 +137,7 @@ public class HashTable
 
         for (int i = 0; i < capacity; i++)
         {
-            if (table[i].getKey() == key)
+            if (table[i].getKey().equals(key))
             {
                 h = table[i].getValue();
                 table[i] = null;
