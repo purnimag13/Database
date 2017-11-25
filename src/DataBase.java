@@ -34,7 +34,8 @@ public class DataBase
         fileScanner = new Scanner(file);
         while (fileScanner.hasNextLine())
         {
-            if (!fileScanner.hasNext()) {
+            if (!fileScanner.hasNext()) 
+            {
                 break;
             }
             String instruction = fileScanner.next();
@@ -72,6 +73,13 @@ public class DataBase
             }
             else if (instruction.equals("list"))
             {
+                if (fileScanner.next() == "artist")
+                {
+                    
+                }
+                else if (fileScanner.next() == "song")
+                {
+                    
                 
             }
             else if (instruction.equals("delete"))

@@ -51,6 +51,22 @@ public class HashTable
         return (int)(Math.abs(sum) % m);
     }
     /**
+     * returns true if the key exists in the hash table
+     * @param key key being searched for
+     * @return true or false depending 
+     */
+    public boolean find(String key)
+    {
+        for (int i = 0; i < capacity; i++)
+        {
+            if (table[i].getKey() == key)
+            {
+                return true;
+            }
+        }
+        return false;    
+    }
+    /**
      * Gets the handle when provided a key value
      * @param key the key being searched for
      * @return the handle stored for that key value
