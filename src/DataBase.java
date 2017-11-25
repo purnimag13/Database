@@ -45,15 +45,13 @@ public class DataBase
             }
             else if (instruction.equals("remove"))
             {
-                //Remove the specified artist or song name from the appropriate hash table, 2-3+ (or BST)
-                //tree and make corresponding marks in the memory.
                 if (fileScanner.next() == "artist")
                 {
-                    
+                    removeArtist(fileScanner.next());
                 }
                 else if (fileScanner.next() == "song")
                 {
-                    
+                    removeSong(fileScanner.next());
                 }
             }
             else if (instruction.equals("print"))
@@ -80,7 +78,7 @@ public class DataBase
                 else if (fileScanner.next() == "song")
                 {
                     
-                
+                }
             }
             else if (instruction.equals("delete"))
             {
@@ -91,6 +89,33 @@ public class DataBase
         }
         
     }
+    /**
+     * removes all artists from everything
+     * @param obj artist to be removed
+     */
+    public void removeArtist(String obj)
+    {
+        while (hashArtist.find(obj))
+        {
+           hashArtist.remove(obj);
+           massiveByteArr.remove(hashArtist.get(obj).getOff());
+           artistTree.remove(hashArtist.get(obj));
+        }
+    }
+    /**
+     * removes all songs from everything
+     * @param obj song to be removed
+     */
+    public void removeSong(String obj)
+    {
+        while (hashSong.find(obj))
+        {
+           hashSong.remove(obj);
+           massiveByteArr.remove(hashSong.get(obj).getOff());
+           songTree.remove(hashSong.get(obj));
+        } 
+    }
+    
     
     /**
      * unfinished - still need to insert KV into BST
