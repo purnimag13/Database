@@ -73,7 +73,11 @@ public class DataBase
             {
                 if (fileScanner.next() == "artist")
                 {
-                    
+                    StringBuilder artist = new StringBuilder();
+                    artist.append(fileScanner.next());
+                    String artistString = artist.toString();
+                    byte[] artistBytes = artistString.getBytes();
+                    listArtist(artistBytes);
                 }
                 else if (fileScanner.next() == "song")
                 {
@@ -82,12 +86,19 @@ public class DataBase
             }
             else if (instruction.equals("delete"))
             {
-                //Delete the specific record for this particular song by this particular artist
+                //Delete the specific record for this particular song by this particular artist from tree
             }
 
             
         }
         
+    }
+    public void listArtist(byte[] b)
+    {
+        int x = massiveByteArr.indexOf(b);
+        //find handle associated w the byte[]
+        //make our own handle?
+        ArrayList<Handle> arrList = artistTree.list(handle)
     }
     /**
      * removes all artists from everything
