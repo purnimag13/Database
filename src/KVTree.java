@@ -84,5 +84,31 @@ public class KVTree extends BinarySearchTree<KVPair>
             }
         }
         return list;
+    }    
+    /**
+     * This method gets a list of handles and then searches through the
+     * tree and orders the list to match the order they appear in the BST
+     * @param list the list of value handles for a given key
+     * @return an ordered list
+     */
+    public ArrayList<Handle> orderTree(ArrayList<Handle> list)
+    {
+        ArrayList<Handle> ordered = new ArrayList<>();
+        
+        Iterator<KVPair> itr = this.iterator();
+        
+        while (itr.hasNext())
+        {
+            KVPair next = itr.next();
+            for (int i = 0; i < list.size(); i++)
+            {
+                if (list.get(i).equals(next.getValue()))
+                {
+                    ordered.add(list.get(i));
+                }
+            }
+        }
+        
+        return ordered;
     }
 }
