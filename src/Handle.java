@@ -1,8 +1,4 @@
 /**
- * 
- */
-
-/**
  * Stores values for finding data in the array
  * @author Purnima Ghosh
  * @author ltara8

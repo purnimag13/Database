@@ -104,7 +104,7 @@ public class KVTree extends BinarySearchTree<KVPair>
             {
                 if (list.get(i).equals(next.getValue()))
                 {
-                    ordered.add(list.get(i));
+                    ordered.add(next.getValue());
                 }
             }
         }
