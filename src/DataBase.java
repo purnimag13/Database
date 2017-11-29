@@ -94,12 +94,19 @@ public class DataBase
         }
         
     }
-    public void listArtist(byte[] b)
+    public void listArtist(String s)
     {
-        int x = massiveByteArr.indexOf(b);
-        //find handle associated w the byte[]
-        //make our own handle?
-        ArrayList<Handle> arrList = artistTree.list(handle)
+        ArrayList<Handle> arrHandle = new ArrayList<>();
+        int i = 0; 
+        while (i < hashArtist.getTable().length)
+        {
+            if (s == hashArtist.getTable()[i].getKey())
+            {
+                arrHandle.add(hashArtist.getTable()[i].getValue());
+            }
+            i++;
+        }
+        
     }
     /**
      * removes all artists from everything

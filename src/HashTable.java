@@ -8,7 +8,7 @@
  */
 public class HashTable
 {
-    private Entry[] table;
+    public Entry[] table;
 
     private int capacity;
 
@@ -19,7 +19,15 @@ public class HashTable
         table = new Entry[initSize];
         capacity = initSize;
         size = 0;
-    }    
+    } 
+    /**
+     * getter method for table
+     * @return table which is an entry[]
+     */
+    public Entry[] getTable()
+    {
+        return table;
+    }
     /**
      * Hashing function to get the location for the 
      * record to be inserted
@@ -191,7 +199,7 @@ public class HashTable
      * @param <K> the generic key type
      * @param <V> the generic value type
      */
-    private class Entry
+    public class Entry
     {
         private String key;
         private Handle value;
