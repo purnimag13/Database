@@ -12,16 +12,16 @@
 public class Handle implements Comparable<Handle> 
 {
     private int off;
-    private int len;
+    private String ident;
     /**
      * constructor for handle class
      * @param offset locations in the array of the data
      * @param length length of the data
      */
-    public Handle(int offset, int length)
+    public Handle(int offset, String identifier)
     {
         this.off = offset;
-        this.len = length;
+        this.ident = identifier;
     }
     /**
      * gets the offset
@@ -43,17 +43,17 @@ public class Handle implements Comparable<Handle>
      * gets length of offset
      * @return int offset
      */
-    public int getLen() 
+    public String getIdent() 
     {
-        return len;
+        return ident;
     }
     /**
      * sets the length of offset
      * @param len length
      */
-    public void setLen(int length) 
+    public void setLen(String length) 
     {
-        this.len = length;
+        this.ident = length;
     }
     /**
      * compares if two handles are equal
@@ -62,7 +62,7 @@ public class Handle implements Comparable<Handle>
      */
     public boolean equals(Handle hand)
     {
-        return off == hand.getOff() && len == hand.getLen();
+        return off == hand.getOff() && ident == hand.getIdent();
     }
     
     @Override

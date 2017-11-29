@@ -22,8 +22,8 @@ public class DataBase
     {
         massiveByteArr = new ArrayList<>();
         
-        hashArtist = new HashTable();
-        hashSong = new HashTable();
+        hashArtist = new HashTable(100);
+        hashSong = new HashTable(100);
         
         artistTree = new KVTree();
         songTree = new KVTree();
@@ -74,11 +74,7 @@ public class DataBase
             {
                 if (fileScanner.next() == "artist")
                 {
-                    StringBuilder artist = new StringBuilder();
-                    artist.append(fileScanner.next());
-                    String artistString = artist.toString();
-                    byte[] artistBytes = artistString.getBytes();
-                    listArtist(artistBytes);
+                    listArtist(fileScanner.next());
                 }
                 else if (fileScanner.next() == "song")
                 {
@@ -94,7 +90,7 @@ public class DataBase
         }
         
     }
-    public void listArtist(String s)
+    public ArrayList<Handle> listArtist(String s)
     {
         ArrayList<Handle> arrHandle = new ArrayList<>();
         int i = 0; 
@@ -106,7 +102,7 @@ public class DataBase
             }
             i++;
         }
-        
+        return artistTree.orderTree(arrHandle);
     }
     /**
      * removes all artists from everything
