@@ -199,10 +199,9 @@ public class DataBase
         {
             massiveByteArr.add(songBytes[k]);
         }
-        Handle handArtist = new Handle(massiveByteArr.indexOf(s1), 
-                (lengthOfArtist + artistBytes.length + 1));
+        Handle handArtist = new Handle(massiveByteArr.indexOf(s1), artistString);
         Handle handSong = new Handle(massiveByteArr.indexOf(s2), 
-                (lengthOfSong + songBytes.length + 1));
+                songTitleString);
         //STILL NEED TO INSERT KV PAIRS
         return hashArtist.insert(artistString, handArtist) ||
                 hashSong.insert(songTitleString, handSong);
