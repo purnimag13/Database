@@ -140,6 +140,7 @@ public class HashTable
             }
         }
         //Checks to see if key is already in the table
+        Handle blank = new Handle(-1, -1);
         if (get(k) != null)
         {
             int slot = quadProbing(k);
@@ -158,13 +159,14 @@ public class HashTable
     public Handle remove(String key)
     {
         Handle h = null;
-
+        Handle blank = new Handle(-1, -1);
+        Entry tombstone = new Entry("Tombstone", blank);
         for (int i = 0; i < capacity; i++)
         {
             if (table[i].getKey().equals(key))
             {
                 h = table[i].getValue();
-                table[i] = null;
+                table[i] = tombstone;
             }
         }
 
