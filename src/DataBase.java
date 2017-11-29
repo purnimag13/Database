@@ -202,7 +202,18 @@ public class DataBase
         Handle handArtist = new Handle(massiveByteArr.indexOf(s1), artistString);
         Handle handSong = new Handle(massiveByteArr.indexOf(s2), 
                 songTitleString);
+        
+        
+        
+        
+        
+        
         //STILL NEED TO INSERT KV PAIRS
+        
+        
+        
+        
+        
         return hashArtist.insert(artistString, handArtist) ||
                 hashSong.insert(songTitleString, handSong);
         
