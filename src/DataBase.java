@@ -21,6 +21,7 @@ public class DataBase
     public DataBase()
     {
         massiveByteArr = new ArrayList<>();
+        
         hashArtist = new HashTable();
         hashSong = new HashTable();
         
@@ -156,7 +157,7 @@ public class DataBase
         int lengthOfArtist = artistBytes.length;
         int lengthOfSong = songBytes.length;
         int s1 = 1;
-        massiveByteArr.add((byte) s1);
+        massiveByteArr.add((byte) s1); // need to byt buffer this
         massiveByteArr.add((byte) lengthOfArtist);
         for (int k = 0; k < artistBytes.length; k++)
         {
