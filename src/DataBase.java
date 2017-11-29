@@ -75,10 +75,11 @@ public class DataBase
                 if (fileScanner.next() == "artist")
                 {
                     listArtist(fileScanner.next());
+                    
                 }
                 else if (fileScanner.next() == "song")
                 {
-                    
+                    listSong(fileScanner.next());
                 }
             }
             else if (instruction.equals("delete"))
@@ -90,6 +91,11 @@ public class DataBase
         }
         
     }
+    /**
+     * lists all the songs by this artist
+     * @param s artist searched
+     * @return ArrayList<Handle> to find the songs
+     */
     public ArrayList<Handle> listArtist(String s)
     {
         ArrayList<Handle> arrHandle = new ArrayList<>();
@@ -103,6 +109,25 @@ public class DataBase
             i++;
         }
         return artistTree.orderTree(arrHandle);
+    }
+    /**
+     * lists all the artists who sing this song
+     * @param s song searched
+     * @return ArrayList<Handle> to find the artists
+     */
+    public ArrayList<Handle> listSong(String s)
+    {
+        ArrayList<Handle> arrHandle = new ArrayList<>();
+        int i = 0; 
+        while (i < hashSong.getTable().length)
+        {
+            if (s == hashSong.getTable()[i].getKey())
+            {
+                arrHandle.add(hashSong.getTable()[i].getValue());
+            }
+            i++;
+        }
+        return songTree.orderTree(arrHandle);
     }
     /**
      * removes all artists from everything
