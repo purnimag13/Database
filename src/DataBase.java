@@ -135,6 +135,10 @@ public class DataBase
      */
     public void removeArtist(String obj)
     {
+        if (!hashArtist.find(obj))
+        {
+            System.out.println(hashArtist.get(obj).toString() + " does not exist in the artist database.");
+        }
         while (hashArtist.find(obj))
         {
            hashArtist.remove(obj);
@@ -148,6 +152,10 @@ public class DataBase
      */
     public void removeSong(String obj)
     {
+        if (!hashArtist.find(obj))
+        {
+            System.out.println(hashSong.get(obj).toString() + " does not exist in the song database.");
+        }
         while (hashSong.find(obj))
         {
            hashSong.remove(obj);
@@ -185,7 +193,7 @@ public class DataBase
         int lengthOfArtist = artistBytes.length;
         int lengthOfSong = songBytes.length;
         int s1 = 1;
-        massiveByteArr.add((byte) s1); // need to byt buffer this
+        massiveByteArr.add((byte) s1);
         massiveByteArr.add((byte) lengthOfArtist);
         for (int k = 0; k < artistBytes.length; k++)
         {
@@ -203,16 +211,11 @@ public class DataBase
         Handle handSong = new Handle(massiveByteArr.indexOf(s2), 
                 songTitleString);
         
+        artistTree.insert(handArtist, handSong);
+        songTree.insert(handSong, handArtist);
         
-        
-        
-        
-        
-        //STILL NEED TO INSERT KV PAIRS
-        
-        
-        
-        
+        System.out.println(handArtist.toString() + " is added to the Artist database.");
+        System.out.println(handSong.toString() + " is added to the Song database.");
         
         return hashArtist.insert(artistString, handArtist) ||
                 hashSong.insert(songTitleString, handSong);
