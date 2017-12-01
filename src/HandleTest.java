@@ -9,9 +9,9 @@ public class HandleTest extends student.TestCase
      */
     public void setUp()
     {
-        hand = new Handle(5, "a");
-        hand1 = new Handle(5, "b");
-        hand2 = new Handle(2, "c");
+        hand = new Handle(5, "Tara");
+        hand1 = new Handle(5, "Tara");
+        hand2 = new Handle(2,"Coco");
     }
     /**
      * tests getters and setters and equals
@@ -19,10 +19,8 @@ public class HandleTest extends student.TestCase
     public void testGetSet()
     {
         assertEquals(hand.getOff(), 5);
-        hand.setOff(2);
-        assertTrue(hand.equals(hand2));
-        assertFalse(hand.equals(hand1));
-        
+        assertEquals(hand.getIdent(), "Tara");
+        hand.setIdent("Coco");        
     }
 
 }

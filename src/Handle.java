@@ -47,7 +47,7 @@ public class Handle implements Comparable<Handle>
      * sets the length of offset
      * @param len length
      */
-    public void setLen(String length) 
+    public void setIdent(String length) 
     {
         this.ident = length;
     }
@@ -60,7 +60,15 @@ public class Handle implements Comparable<Handle>
     {
         return off == hand.getOff() && ident == hand.getIdent();
     }
-    
+    /**
+     * first attempt at toString
+     * @return string to String
+     * 
+     */
+    public String toString()
+    {
+        return " |" + ident + "| ";
+    }
     @Override
     public int compareTo(Handle hand) 
     {
