@@ -172,6 +172,7 @@ public class HashTable
 
         return h;
     }
+    
     /**
      * This method prints every non null item in the hash table
      */
@@ -230,6 +231,14 @@ public class HashTable
         public void setValue(Handle value) 
         {
             this.value = value;
+        }
+        
+        /**
+         * @return string to String
+         */
+        public String toString()
+        {
+            return " |" + key + "| "; 
         }
 
 
