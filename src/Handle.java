@@ -1,3 +1,4 @@
+
 /**
  * Stores values for finding data in the array
  * @author Purnima Ghosh
@@ -8,16 +9,16 @@
 public class Handle implements Comparable<Handle> 
 {
     private int off;
-    private String ident;
+    private int len;
     /**
      * constructor for handle class
      * @param offset locations in the array of the data
      * @param length length of the data
      */
-    public Handle(int offset, String identifier)
+    public Handle(int offset, int length)
     {
         this.off = offset;
-        this.ident = identifier;
+        this.len = length;
     }
     /**
      * gets the offset
@@ -39,17 +40,17 @@ public class Handle implements Comparable<Handle>
      * gets length of offset
      * @return int offset
      */
-    public String getIdent() 
+    public int getLen() 
     {
-        return ident;
+        return len;
     }
     /**
      * sets the length of offset
      * @param len length
      */
-    public void setIdent(String length) 
+    public void setLen(int length) 
     {
-        this.ident = length;
+        this.len = length;
     }
     /**
      * compares if two handles are equal
@@ -58,17 +59,9 @@ public class Handle implements Comparable<Handle>
      */
     public boolean equals(Handle hand)
     {
-        return off == hand.getOff() && ident == hand.getIdent();
+        return off == hand.getOff() && len == hand.getLen();
     }
-    /**
-     * first attempt at toString
-     * @return string to String
-     * 
-     */
-    public String toString()
-    {
-        return " |" + ident + "| ";
-    }
+    
     @Override
     public int compareTo(Handle hand) 
     {

@@ -142,9 +142,14 @@ public class DataBase
         while (hashArtist.find(obj))
         {
            hashArtist.remove(obj);
-           massiveByteArr.remove(hashArtist.get(obj).getOff());
+           massiveByteArr.set(hashArtist.get(obj).getOff(), (byte) 0);
            artistTree.remove(hashArtist.get(obj));
         }
+    }
+    public void delete(String art, String title)
+    {
+        if ()
+        
     }
     /**
      * removes all songs from everything
@@ -159,7 +164,7 @@ public class DataBase
         while (hashSong.find(obj))
         {
            hashSong.remove(obj);
-           massiveByteArr.remove(hashSong.get(obj).getOff());
+           massiveByteArr.set(hashSong.get(obj).getOff(), (byte) 0);
            songTree.remove(hashSong.get(obj));
         } 
     }
@@ -207,9 +212,10 @@ public class DataBase
         {
             massiveByteArr.add(songBytes[k]);
         }
-        Handle handArtist = new Handle(massiveByteArr.indexOf(s1), artistString);
+        Handle handArtist = new Handle(massiveByteArr.indexOf(s1), 
+                (lengthOfArtist + 2));
         Handle handSong = new Handle(massiveByteArr.indexOf(s2), 
-                songTitleString);
+                (lengthOfSong + 2));
         
         artistTree.insert(handArtist, handSong);
         songTree.insert(handSong, handArtist);
