@@ -20,11 +20,7 @@ public class HandleTest extends student.TestCase
     {
         assertEquals(hand.getOff(), 5);
         assertEquals(hand.getIdent(), "Tara");
-        hand.setIdent("Coco");
-        hand.setOff(2);
-        assertTrue(hand.equals(hand2));
-        assertFalse(hand.equals(hand1));
-        
+        hand.setIdent("Coco");        
     }
 
 }
