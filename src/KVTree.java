@@ -31,17 +31,16 @@ public class KVTree extends BinarySearchTree<KVPair>
     public boolean remove(Handle name)
     {
         Iterator<KVPair> itr = this.iterator();
-        boolean removed = false;
         while (itr.hasNext())
         {
             KVPair temp = itr.next();
             if (temp.getKey().equals(name))
             {
                 delete(temp);
-                removed = true;
+                return true;
             }
         }
-        return removed;
+        return false;
     }
     /**
      * This method deletes a particular KVPair from the tree
