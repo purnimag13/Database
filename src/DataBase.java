@@ -100,7 +100,10 @@ public class DataBase
             }
             else if (instruction.equals("delete"))
             {
-                //Delete the specific record for this particular song by this particular artist from tree
+                String artistName = fileScanner.next();
+                fileScanner.skip("<SEP>");
+                String songName = fileScanner.next();
+                delete(artistName, songName);
             }
 
             
@@ -258,7 +261,7 @@ public class DataBase
                 massiveByteArr.add(songBytes[k]);
             } 
         }
-        
+        // se li te chu >:)
         Handle handArtist = new Handle(massiveByteArr.indexOf(s1), 
                 (lengthOfArtist + 2));
         Handle handSong = new Handle(massiveByteArr.indexOf(s2), 
