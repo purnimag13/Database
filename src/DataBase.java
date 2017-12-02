@@ -203,12 +203,12 @@ public class DataBase
             artistTree.delete(tempArtist, tempSong);
             songTree.delete(tempSong, tempArtist);
         }
-        if (artistTree.countHandles() == 0)
+        if (artistTree.countHandles(tempArtist) == 0)
         {
             arr.remove(art);
             hashArtist.remove(art);
         }
-        if (songTree.countHandles() == 0)
+        if (songTree.countHandles(tempSong) == 0)
         {
             arr.remove(title);
             hashSong.remove(title);
