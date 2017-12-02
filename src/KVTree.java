@@ -63,12 +63,29 @@ public class KVTree extends BinarySearchTree<KVPair>
         return false;
     }
     /**
-     * counts how many times a handle is used
+     * 
+     * @param h
      * @return
      */
-    public int countHandles()
+    public int countHandles(Handle h)
     {
+        int count = 0;
+        Iterator<KVPair> itr = this.iterator();
         
+        while (itr.hasNext())
+        {
+            KVPair curr = itr.next();
+            if (curr.getKey() == h)
+            {
+                count++;
+            }
+            if (curr.getValue() == h)
+            {
+                count++;
+            }
+        }
+        
+        return count;
     }
     /**
      * every time handle h appears in the tree
@@ -79,7 +96,9 @@ public class KVTree extends BinarySearchTree<KVPair>
      */
     public ArrayList<Handle> findHandlePair(Handle h)
     {
+        ArrayList<Handle> list = new ArrayList<>();
         
+        return list;
     }
     /**
      * This method returns a list of all values associated with the searched

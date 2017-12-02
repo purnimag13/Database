@@ -160,7 +160,7 @@ public class HashTable
     public Handle remove(String key)
     {
         Handle h = null;
-        Handle blank = new Handle(-1, "TS");
+        Handle blank = new Handle(-1, -1);
         Entry tombstone = new Entry("Tombstone", blank);
         for (int i = 0; i < capacity; i++)
         {
