@@ -131,7 +131,7 @@ public class DataBase
         {
             hashSong.print();
         }
-        System.out.println(hashSong.getTable().length);
+        System.out.println("total songs: " + hashSong.getTable().length);
     }
     public void printArtist()
     {
@@ -140,7 +140,7 @@ public class DataBase
         {
             hashArtist.print();
         }
-        System.out.println(hashArtist.getTable().length);
+        System.out.println("total artists: " + hashArtist.getTable().length);
     }
     /**
      * lists all the songs by this artist
@@ -207,17 +207,18 @@ public class DataBase
             tempSong = arr.searchAndReturn(title);
             artistTree.delete(tempArtist, tempSong);
             songTree.delete(tempSong, tempArtist);
+            if (artistTree.countHandles(tempArtist) == 0)
+            {
+                arr.remove(art);
+                hashArtist.remove(art);
+            }
+            if (songTree.countHandles(tempSong) == 0)
+            {
+                arr.remove(title);
+                hashSong.remove(title);
+            }
         }
-        if (artistTree.countHandles(tempArtist) == 0)
-        {
-            arr.remove(art);
-            hashArtist.remove(art);
-        }
-        if (songTree.countHandles(tempSong) == 0)
-        {
-            arr.remove(title);
-            hashSong.remove(title);
-        }
+        
         return true;
     }
     /**
