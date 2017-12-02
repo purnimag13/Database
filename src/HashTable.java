@@ -93,7 +93,23 @@ public class HashTable
 
         return h;
     }
-    // TODO: make get index method
+    /**
+     * Gets the index of a specific key
+     * @param key what you want to find the index of
+     * @return the index or -1 if the string is not in the table
+     */
+    public int getIndex(String key)
+    {
+        for (int i = 0; i < capacity; i++)
+        {
+            if (table[i].getKey() == key)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Method to perform the quadratic 
      * probing to resolve collision errors
@@ -173,7 +189,7 @@ public class HashTable
 
         return h;
     }
-    
+
     /**
      * This method prints every non null item in the hash table
      */
@@ -184,7 +200,7 @@ public class HashTable
             if (table[i].getKey() != null)
             {
                 System.out.println(this.getTable()[i].getKey().toString()); 
-                
+
             }
         }
     }
@@ -234,7 +250,7 @@ public class HashTable
         {
             this.value = value;
         }
-        
+
         /**
          * @return string to String
          */
