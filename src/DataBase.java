@@ -124,6 +124,19 @@ public class DataBase
             }
         }
     }
+    public void printSong()
+    {
+        int length = hashSong.getTable().length;
+        for (int i = 0; i < length; i++)
+        {
+            System.out.println(hashSong.getTable()[i].getKey().toString());
+        }
+        System.out.println(hashSong.getTable().length);
+    }
+    public void printArtist()
+    {
+        
+    }
     /**
      * lists all the songs by this artist
      * @param s artist searched
