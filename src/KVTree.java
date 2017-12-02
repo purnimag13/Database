@@ -62,7 +62,22 @@ public class KVTree extends BinarySearchTree<KVPair>
         }
         return false;
     }
+    /**
+     * counts how many times a handle is used
+     * @return
+     */
     public int countHandles()
+    {
+        
+    }
+    /**
+     * every time handle h appears in the tree
+     * as the KEY
+     * append the Value handle attached to it
+     * @param h
+     * @return
+     */
+    public ArrayList<Handle> findHandlePair(Handle h)
     {
         
     }

@@ -101,7 +101,6 @@ public class DataBase
                             System.out.println(temp[i].toString());
                         }
                     }
-
                 }
                 else if (fileScanner.next() == "song")
                 {
@@ -123,10 +122,7 @@ public class DataBase
                 String songName = fileScanner.next();
                 delete(artistName, songName);
             }
-
-
         }
-
     }
     /**
      * lists all the songs by this artist
@@ -135,16 +131,8 @@ public class DataBase
      */
     public ArrayList<Handle> listArtist(String s)
     {
-        ArrayList<Handle> arrHandle = new ArrayList<>();
-        int i = 0; 
-        while (i < hashArtist.getTable().length)
-        {
-            if (s == hashArtist.getTable()[i].getKey())
-            {
-                arrHandle.add(hashArtist.getTable()[i].getValue());
-            }
-            i++;
-        }
+        Handle temp = arr.searchAndReturn(s);
+        ArrayList<Handle> arrHandle = artistTree.findHandlePair(temp);
         return artistTree.orderTree(arrHandle);
     }
     /**
@@ -155,16 +143,7 @@ public class DataBase
     public ArrayList<Handle> listSong(String s)
     {
         Handle temp = arr.searchAndReturn(s);
-        ArrayList<Handle> arrHandle = new ArrayList<>();
-        int i = 0; 
-        while (i < hashSong.getTable().length)
-        {
-            if (s == hashSong.getTable()[i].getKey())
-            {
-                arrHandle.add(hashSong.getTable()[i].getValue());
-            }
-            i++;
-        }
+        ArrayList<Handle> arrHandle = songTree.findHandlePair(temp);
         return songTree.orderTree(arrHandle);
     }
     /**
