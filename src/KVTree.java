@@ -63,9 +63,10 @@ public class KVTree extends BinarySearchTree<KVPair>
         return false;
     }
     /**
-     * 
-     * @param h
-     * @return
+     * This method counts the number of times a particular handle occurs
+     * in the tree
+     * @param h the handle being counted
+     * @return the number of times the handle appears
      */
     public int countHandles(Handle h)
     {
