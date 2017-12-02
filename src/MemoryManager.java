@@ -36,7 +36,7 @@ public class MemoryManager
             int off = addToArray(art);
             artistHandle = makeNewHandle(art, off);
             handleArr.add(artistHandle);
-            pair[1] = artistHandle;
+            pair[0] = artistHandle;
         }
         else // if you can find it, check the flag
         {
@@ -45,7 +45,7 @@ public class MemoryManager
                 int off = addToArray(art);
                 artistHandle = makeNewHandle(art, off);
                 handleArr.add(artistHandle); 
-                pair[1] = artistHandle;
+                pair[0] = artistHandle;
             }
         }
         if (!searchArray(song))
@@ -53,7 +53,7 @@ public class MemoryManager
             int off = addToArray(song);
             songHandle = makeNewHandle(song, off);
             handleArr.add(songHandle);
-            pair[2] = songHandle;
+            pair[1] = songHandle;
         }
         else
         {
@@ -62,7 +62,7 @@ public class MemoryManager
                 int off = addToArray(song);
                 songHandle = makeNewHandle(song, off);
                 handleArr.add(songHandle); 
-                pair[2] = songHandle;
+                pair[1] = songHandle;
             }
         }
         return pair;
@@ -71,10 +71,12 @@ public class MemoryManager
      * this works under the assumption that 
      * the handles are not used elsewhere
      * finds flag and changes it to zero
+     * removes the old handle from the handle array 
+     * to avoid confusion when a new one is added
      * @param art
      * @param song
      */
-    public void remove(String s)
+    public boolean remove(String s)
     {
         if (searchArray(s))
         {
@@ -87,7 +89,10 @@ public class MemoryManager
             {
                 handleArr.remove(temp);
             }
+            return true;
         }
+        return false;
+        
     }
     /**
      * if the handle exists in the array
@@ -119,6 +124,20 @@ public class MemoryManager
         int lengthOfByteArr = stringAsBytes.length;
         Handle temp = new Handle(offset, lengthOfByteArr + 2);
         return temp;
+    }
+    /**
+     * returns the handle of the string that
+     * is being searched for
+     * @param s
+     * @return
+     */
+    public Handle searchAndReturn(String s)
+    {
+        byte[] stringAsBytes = s.getBytes();
+        int lengthOfByteArr = stringAsBytes.length;
+        int off = massiveByteArr.indexOf(stringAsBytes[0]) - 2;
+        Handle temp = new Handle(off, lengthOfByteArr + 2);
+        return handleArr.get(handleArr.indexOf(temp));
     }
     /**
      * searches the entire array

@@ -9,26 +9,31 @@ public class DataBase
 {
     Scanner fileScanner;
     ArrayList<Byte> massiveByteArr;
+    ArrayList<Handle> handArr;
     int resize = 0;
-    
+
+    MemoryManager arr;
+
     HashTable hashArtist;
     HashTable hashSong;
-    
+
     KVTree artistTree;
     KVTree songTree;
-    
-    
+
+
     public DataBase()
     {
         massiveByteArr = new ArrayList<>();
-        
+        handArr = arr.findHandle();
+        arr = new MemoryManager();
+
         hashArtist = new HashTable(100);
         hashSong = new HashTable(100);
-        
+
         artistTree = new KVTree();
         songTree = new KVTree();
     }
-    
+
     public void readFile(String fileName) throws FileNotFoundException
     {
         File file = new File(fileName);
@@ -42,7 +47,20 @@ public class DataBase
             String instruction = fileScanner.next();
             if (instruction.equals("insert"))
             {
-                insert();
+                StringBuilder artist = new StringBuilder();
+                StringBuilder songTitle = new StringBuilder();
+                while (fileScanner.next() != "<SEP>")
+                {
+                    artist.append(fileScanner.next());
+                }
+                fileScanner.skip("<SEP>");
+                while (fileScanner.hasNext())
+                {
+                    songTitle.append(fileScanner.next()); 
+                }
+                String artistString = artist.toString();
+                String songTitleString = songTitle.toString();
+                insert(artistString, songTitleString);
             }
             else if (instruction.equals("remove"))
             {
@@ -59,11 +77,11 @@ public class DataBase
             {
                 if (fileScanner.next() == "artist")
                 {
-                    
+
                 }
                 else if (fileScanner.next() == "song")
                 {
-                    
+
                 }
                 else if (fileScanner.next() == "tree")
                 {
@@ -83,7 +101,7 @@ public class DataBase
                             System.out.println(temp[i].toString());
                         }
                     }
-                    
+
                 }
                 else if (fileScanner.next() == "song")
                 {
@@ -106,9 +124,9 @@ public class DataBase
                 delete(artistName, songName);
             }
 
-            
+
         }
-        
+
     }
     /**
      * lists all the songs by this artist
@@ -136,6 +154,7 @@ public class DataBase
      */
     public ArrayList<Handle> listSong(String s)
     {
+        Handle temp = arr.searchAndReturn(s);
         ArrayList<Handle> arrHandle = new ArrayList<>();
         int i = 0; 
         while (i < hashSong.getTable().length)
@@ -154,15 +173,16 @@ public class DataBase
      */
     public void removeArtist(String obj)
     {
+        Handle temp = arr.searchAndReturn(obj);
         if (!hashArtist.find(obj))
         {
             System.out.println(hashArtist.get(obj).toString() + " does not exist in the artist database.");
         }
-        while (hashArtist.find(obj))
+        else
         {
-           hashArtist.remove(obj);
-           massiveByteArr.set(hashArtist.get(obj).getOff(), (byte) 0);
-           artistTree.remove(hashArtist.get(obj));
+            arr.remove(obj);
+            hashArtist.remove(obj);
+            artistTree.remove(temp);
         }
     }
     /**
@@ -170,26 +190,38 @@ public class DataBase
      * @param art artist to be deleted
      * @param title song to be deleted
      */
-    public void delete(String art, String title)
+    public boolean delete(String art, String title)
     {
-        if (!hashArtist.find(art) || !hashSong.find(title))
+        Handle tempArtist;
+        Handle tempSong;
+        if (!hashArtist.find(art))
         {
-            //system output
+            System.out.println("|" + art + "| does not exist in the artist database.");
+            return false;
         }
-        else if (hashArtist.find(art) && hashSong.find(title))
+        if (!hashSong.find(title))
         {
-            songTree.delete(hashSong.get(title), hashArtist.get(art));
-            artistTree.delete(hashArtist.get(art), hashSong.get(title));
-            
+            System.out.println("|" + title + "| does not exist in the song database.");
+            return false;
+        }
+        if (arr.searchAndReturn(art) != null && arr.searchAndReturn(title) != null)
+        {
+            tempArtist = arr.searchAndReturn(art);
+            tempSong = arr.searchAndReturn(title);
+            artistTree.delete(tempArtist, tempSong);
+            songTree.delete(tempSong, tempArtist);
+        }
+        if (artistTree.countHandles() == 0)
+        {
+            arr.remove(art);
             hashArtist.remove(art);
-            hashSong.remove(title);
-            
-            if (!hashArtist.find(art) && !hashSong.find(title))
-            {
-                massiveByteArr.set(hashArtist.get(art).getOff(), (byte) 0);
-                massiveByteArr.set(hashSong.get(title).getOff(), (byte) 0); 
-            }
         }
+        if (songTree.countHandles() == 0)
+        {
+            arr.remove(title);
+            hashSong.remove(title);
+        }
+        return true;
     }
     /**
      * removes all songs from everything
@@ -197,86 +229,46 @@ public class DataBase
      */
     public void removeSong(String obj)
     {
-        if (!hashArtist.find(obj))
+        Handle temp = arr.searchAndReturn(obj);
+        if (!hashSong.find(obj))
         {
             System.out.println(hashSong.get(obj).toString() +
                     " does not exist in the song database.");
         }
-        while (hashSong.find(obj))
+        else
         {
-           hashSong.remove(obj);
-           massiveByteArr.set(hashSong.get(obj).getOff(), (byte) 0);
-           songTree.remove(hashSong.get(obj));
-        } 
+          hashSong.remove(obj); 
+          arr.remove(obj);
+          songTree.remove(temp);
+        }
     }
-    /**
-     * unfinished - still need to insert KV into BST
-     * @return true if inserted
-     */
-    public boolean insert()
+    public void insert(String art, String song)
     {
-        StringBuilder artist = new StringBuilder();
-        StringBuilder songTitle = new StringBuilder();
-        
-        //creates a string so we can read in the artist
-        
-        while (fileScanner.next() != "<SEP>")
+        Handle[] temp = arr.add(art, song); 
+        if (temp[0] != null && temp[1] != null)//artist and song both inserted
         {
-           artist.append(fileScanner.next());
+            hashArtist.insert(art, temp[0]);
+            hashSong.insert(song, temp[1]);
+            artistTree.insert(temp[0], temp[1]);
+            songTree.insert(temp[1], temp[0]);
         }
-        fileScanner.skip("<SEP>");
-        while (fileScanner.hasNext())
+        else if (temp[0] != null && temp[1] == null)//artist inserted - song duplicate
         {
-           songTitle.append(fileScanner.next()); 
+            hashArtist.insert(art, temp[0]);
+            artistTree.insert(temp[0], arr.searchAndReturn(song));
+            songTree.insert(arr.searchAndReturn(song), temp[0]);
         }
-        
-        String artistString = artist.toString();
-        String songTitleString = songTitle.toString();
-        
-        byte[] songBytes = songTitleString.getBytes();
-        byte[] artistBytes = artistString.getBytes();
-        
-        int lengthOfArtist = artistBytes.length;
-        int lengthOfSong = songBytes.length;
-        
-        int s1 = 1;
-        massiveByteArr.add((byte) s1);
-        massiveByteArr.add((byte) (lengthOfArtist + 2));
-        
-        if (!hashArtist.find(artistString))
+        else if (temp[0] != null && temp[1] == null)//artist duplicate - song inserted
         {
-            for (int k = 0; k < artistBytes.length; k++)
-            {
-                massiveByteArr.add(artistBytes[k]);
-            } 
+            hashSong.insert(song, temp[1]);
+            artistTree.insert(arr.searchAndReturn(art), temp[1]);
+            songTree.insert(temp[1], arr.searchAndReturn(art));
         }
-        int s2 = 1;
-        massiveByteArr.add((byte) s2);
-        massiveByteArr.add((byte) (lengthOfSong + 2));
-        
-        if (!hashSong.find(songTitleString))
+        else //both duplicates
         {
-            for (int k = 0; k < songBytes.length; k++)
-            {
-                massiveByteArr.add(songBytes[k]);
-            } 
+            artistTree.insert(arr.searchAndReturn(art), arr.searchAndReturn(song));
+            songTree.insert(arr.searchAndReturn(song), arr.searchAndReturn(art));
         }
-        // se li te chu >:)
-        Handle handArtist = new Handle(massiveByteArr.indexOf(s1), 
-                (lengthOfArtist + 2));
-        Handle handSong = new Handle(massiveByteArr.indexOf(s2), 
-                (lengthOfSong + 2));
-        
-        artistTree.insert(handArtist, handSong);
-        songTree.insert(handSong, handArtist);
-        
-        System.out.println(handArtist.toString() 
-                + " is added to the Artist database.");
-        System.out.println(handSong.toString() 
-                + " is added to the Song database.");
-        
-        return hashArtist.insert(artistString, handArtist) ||
-                hashSong.insert(songTitleString, handSong);
-        
+
     }
 }

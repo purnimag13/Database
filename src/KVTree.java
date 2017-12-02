@@ -62,6 +62,10 @@ public class KVTree extends BinarySearchTree<KVPair>
         }
         return false;
     }
+    public int countHandles()
+    {
+        
+    }
     /**
      * This method returns a list of all values associated with the searched
      * key. If the key was an artist this method would search through the tree
