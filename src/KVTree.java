@@ -98,6 +98,16 @@ public class KVTree extends BinarySearchTree<KVPair>
     {
         ArrayList<Handle> list = new ArrayList<>();
         
+        Iterator<KVPair> itr = this.iterator();
+        while (itr.hasNext())
+        {
+            KVPair curr = itr.next();
+            if (curr.getKey() == h)
+            {
+                list.add(h);
+            }
+        }
+        
         return list;
     }
     /**
