@@ -129,13 +129,18 @@ public class DataBase
         int length = hashSong.getTable().length;
         for (int i = 0; i < length; i++)
         {
-            System.out.println(hashSong.getTable()[i].getKey().toString());
+            hashSong.print();
         }
         System.out.println(hashSong.getTable().length);
     }
     public void printArtist()
     {
-        
+        int length = hashArtist.getTable().length;
+        for (int i = 0; i < length; i++)
+        {
+            hashArtist.print();
+        }
+        System.out.println(hashArtist.getTable().length);
     }
     /**
      * lists all the songs by this artist

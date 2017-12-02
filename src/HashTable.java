@@ -93,6 +93,7 @@ public class HashTable
 
         return h;
     }
+    // TODO: make get index method
     /**
      * Method to perform the quadratic 
      * probing to resolve collision errors
@@ -182,7 +183,8 @@ public class HashTable
         {
             if (table[i].getKey() != null)
             {
-                System.out.println(table[i].getKey());
+                System.out.println(this.getTable()[i].getKey().toString()); 
+                
             }
         }
     }
