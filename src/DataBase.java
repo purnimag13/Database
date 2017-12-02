@@ -1,10 +1,15 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-
+/**
+ * Reads the input and outputs 
+ * the proper things
+ * @author Purnima Gosh
+ * @author taralaughlin
+ * @version 12.02.17
+ *
+ */
 public class DataBase 
 {
     Scanner fileScanner;
@@ -19,8 +24,9 @@ public class DataBase
 
     KVTree artistTree;
     KVTree songTree;
-
-
+    /**
+     * database constructor
+     */
     public DataBase()
     {
         massiveByteArr = new ArrayList<>();
@@ -33,7 +39,12 @@ public class DataBase
         artistTree = new KVTree();
         songTree = new KVTree();
     }
-
+    /**
+     * reads the file and does the proper actions
+     * depending
+     * @param fileName file to be read in
+     * @throws FileNotFoundException exception thrown
+     */
     public void readFile(String fileName) throws FileNotFoundException
     {
         File file = new File(fileName);
@@ -77,11 +88,11 @@ public class DataBase
             {
                 if (fileScanner.next() == "artist")
                 {
-
+                    printArtist();
                 }
                 else if (fileScanner.next() == "song")
                 {
-
+                    printSong();
                 }
                 else if (fileScanner.next() == "tree")
                 {
@@ -124,6 +135,9 @@ public class DataBase
             }
         }
     }
+    /**
+     * prints all of the songs in the hash table
+     */
     public void printSong()
     {
         int length = hashSong.getTable().length;
@@ -133,6 +147,9 @@ public class DataBase
         }
         System.out.println("total songs: " + hashSong.getTable().length);
     }
+    /**
+     * prints all the artists in the hash table
+     */
     public void printArtist()
     {
         int length = hashArtist.getTable().length;
@@ -218,7 +235,7 @@ public class DataBase
                 hashSong.remove(title);
             }
         }
-        
+
         return true;
     }
     /**
@@ -235,11 +252,17 @@ public class DataBase
         }
         else
         {
-          hashSong.remove(obj); 
-          arr.remove(obj);
-          songTree.remove(temp);
+            hashSong.remove(obj); 
+            arr.remove(obj);
+            songTree.remove(temp);
         }
     }
+    /**
+     * inserts to the array
+     * hash table and tree
+     * @param art artist name
+     * @param song song title
+     */
     public void insert(String art, String song)
     {
         Handle[] temp = arr.add(art, song); 
