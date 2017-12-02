@@ -10,77 +10,159 @@ public class MemoryManager
         massiveByteArr = new ArrayList<>();
         handleArr = new ArrayList<>();
     }
-
-    public Handle add(byte a, byte c, byte[] b)
+    /**
+     * gives other things access to the list of handles
+     * @return
+     */
+    public ArrayList<Handle> findHandle()
     {
-        boolean check = true;
-        massiveByteArr.add(a);
-        massiveByteArr.add(c);
-
-        if (massiveByteArr.contains(b[0]))
+        return handleArr;
+    }
+    /**
+     * adds the bytes to byte arr
+     * @param art
+     * @param song
+     * @return the handles that were just added to make it
+     * easier to add the KVPairs and hash table handles
+     * will return null if nothing was changed
+     */
+    public Handle[] add(String art, String song)
+    {
+        Handle[] pair = new Handle[2];
+        Handle artistHandle;
+        Handle songHandle;
+        if (!searchArray(art))//if u cant find it in the array add
         {
-            int k = 0;
-            for (int i = massiveByteArr.indexOf(b[1]); i < b.length; i++)
+            int off = addToArray(art);
+            artistHandle = makeNewHandle(art, off);
+            handleArr.add(artistHandle);
+            pair[1] = artistHandle;
+        }
+        else // if you can find it, check the flag
+        {
+            if (!checkFlagValid(art))
             {
-                if (massiveByteArr.get(i) != b[k])
-                {
-                    break; 
-                }
-                else
-                {
-                    check = true;
-                }
-                k++;
+                int off = addToArray(art);
+                artistHandle = makeNewHandle(art, off);
+                handleArr.add(artistHandle); 
+                pair[1] = artistHandle;
             }
-            if (check)
-            {
-                Handle newHand = new Handle(massiveByteArr.get(massiveByteArr.indexOf(a)), b.length + 2);
-                handleArr.add(newHand);
-                for (byte bytes : b)
-                {
-                    massiveByteArr.add(bytes);
-                }
-                return newHand;
-            }
+        }
+        if (!searchArray(song))
+        {
+            int off = addToArray(song);
+            songHandle = makeNewHandle(song, off);
+            handleArr.add(songHandle);
+            pair[2] = songHandle;
         }
         else
         {
-            Handle newHand = new Handle(massiveByteArr.get(massiveByteArr.indexOf(a)), b.length + 2);
-            handleArr.add(newHand);
-            for (byte bytes : b)
+            if (!checkFlagValid(song))
             {
-                massiveByteArr.add(bytes);
+                int off = addToArray(song);
+                songHandle = makeNewHandle(song, off);
+                handleArr.add(songHandle); 
+                pair[2] = songHandle;
             }
-            return newHand;
         }
-        return this.find(a, c, b);
+        return pair;
     }
-
-    public void remove(KVTree art, KVTree song)
+    /**
+     * this works under the assumption that 
+     * the handles are not used elsewhere
+     * finds flag and changes it to zero
+     * @param art
+     * @param song
+     */
+    public void remove(String s)
     {
-
-    }
-    public Handle find(byte a, byte c, byte[] b)
-    {
-        if (massiveByteArr.contains(b[0]))
+        if (searchArray(s))
         {
-            int k = 0;
-            for (int i = massiveByteArr.indexOf(b[1]); i < b.length; i++)
+            byte[] stringAsBytes = s.getBytes();
+            int index = massiveByteArr.indexOf(stringAsBytes[0]);//we may need to check for duplicate string bytes
+            massiveByteArr.set(massiveByteArr.get(index - 2), (byte) 0);
+            Handle temp = new Handle(massiveByteArr.indexOf(massiveByteArr.get(index - 2)),
+                    stringAsBytes.length + 2);
+            if (handleArr.contains(temp))
             {
-                if (massiveByteArr.get(i) != b[k])
+                handleArr.remove(temp);
+            }
+        }
+    }
+    /**
+     * if the handle exists in the array
+     * this finds its flag and checks if its valid
+     * @param s string searched for
+     * @return true if 1 false if 0
+     */
+    public boolean checkFlagValid(String s)//under assumption we already know handle exists
+    {
+        byte[] stringAsBytes = s.getBytes();
+        int index = massiveByteArr.indexOf(stringAsBytes[0]);//we may need to check for duplicate string bytes
+        if (massiveByteArr.get(index - 2) == 0)
+        {
+            return false;
+        }
+        return true;
+
+    }
+    /**
+     * makes a new handle with the information provided
+     * aka the string that is the artist or song 
+     * @param s
+     * @param offset
+     * @return
+     */
+    public Handle makeNewHandle(String s, int offset)
+    {
+        byte[] stringAsBytes = s.getBytes();
+        int lengthOfByteArr = stringAsBytes.length;
+        Handle temp = new Handle(offset, lengthOfByteArr + 2);
+        return temp;
+    }
+    /**
+     * searches the entire array
+     * to see if the handle exists in it
+     * @param s
+     * @return
+     */
+    public boolean searchArray(String s)
+    {
+        byte[] stringAsBytes = s.getBytes();
+        int lengthOfByteArr = stringAsBytes.length;
+        if (massiveByteArr.contains(stringAsBytes[0]))
+        {
+            for (int w = massiveByteArr.indexOf(stringAsBytes[0]); w < lengthOfByteArr; w++)
+            {
+                int k = 0;
+                if (massiveByteArr.get(w) != stringAsBytes[k])
                 {
-                    break; 
+                    break;
                 }
                 k++;
             }
-            Handle newHand = new Handle(massiveByteArr.get(massiveByteArr.indexOf(a)), b.length + 2);
-            return handleArr.get(handleArr.indexOf(newHand));
+            return true;
         }
-        return null;
-
+        return false;
     }
-    public Handle findHandle(byte[] b)
+    /**
+     * returns the offset of what was just added to the byte array
+     * @param s
+     * @return
+     */
+    public int addToArray(String s)
     {
-
+        byte[] stringAsBytes = s.getBytes();
+        int lengthOfByteArr = stringAsBytes.length;
+        int flag = 1; 
+        int lengthOfRecord = lengthOfByteArr + 2; 
+        massiveByteArr.add((byte) flag);
+        massiveByteArr.add((byte) lengthOfRecord);
+        for (int i = 0; i < lengthOfByteArr; i++)
+        {
+            massiveByteArr.add(stringAsBytes[i]);
+        }
+        return massiveByteArr.indexOf(flag);
     }
+
 }

@@ -140,7 +140,7 @@ public class HashTable
             }
         }
         //Checks to see if key is already in the table
-        Handle blank = new Handle(-1, "TS");
+        //Handle blank = new Handle(-1, "TS");
         if (get(k) != null)
         {
             int slot = quadProbing(k);
