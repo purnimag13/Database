@@ -199,7 +199,8 @@ public class HashTable
         {
             if (table[i].getKey() != null)
             {
-                System.out.println(this.getTable()[i].getKey().toString()); 
+                System.out.println(this.getTable()[i].getKey().toString() 
+                        + getIndex(table[i].getKey())); 
 
             }
         }
