@@ -53,7 +53,7 @@ public class MemoryManagerTest extends student.TestCase
         testMM.remove(artist);
         Handle[] test = testMM.add(artist, song);
         ArrayList<Handle> arr = testMM.findHandle();
-        assertTrue(arr.contains(test[1]));
+        assertTrue(arr.contains(test[0]));
     }
     /**
      * Test add after a handle has been removed
@@ -64,7 +64,7 @@ public class MemoryManagerTest extends student.TestCase
         testMM.remove(song);
         Handle[] test = testMM.add(artist, song);
         ArrayList<Handle> arr = testMM.findHandle();
-        assertTrue(arr.contains(test[1]));
+        assertTrue(arr.contains(test[0]));
     }
     /**
      * Tests removing an artist from the database
@@ -103,6 +103,6 @@ public class MemoryManagerTest extends student.TestCase
         int a = testMM.findIndexOfHandle(artist);
         int s = testMM.findIndexOfHandle(song);
         assertEquals(2, a);
-        assertEquals(0, s);
+        assertEquals(10, s);
     }
 }
