@@ -191,31 +191,6 @@ public class MemoryManager
         return handleArr.get(handleArr.indexOf(temp));
     }
     /**
-     * searches the entire array
-     * to see if the handle exists in it
-     * @param s
-     * @return
-     */
-    public boolean searchArray(String s)
-    {
-        byte[] stringAsBytes = s.getBytes();
-        int lengthOfByteArr = stringAsBytes.length;
-        if (massiveByteArr.contains(stringAsBytes[0]))
-        {
-            for (int w = massiveByteArr.indexOf(stringAsBytes[0]); w < lengthOfByteArr; w++)
-            {
-                int k = 0;
-                if (massiveByteArr.get(w) != stringAsBytes[k])
-                {
-                    break;
-                }
-                k++;
-            }
-            return true;
-        }
-        return false;
-    }
-    /**
      * returns the offset of what was just added to the byte array
      * @param s
      * @return
