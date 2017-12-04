@@ -67,7 +67,12 @@ public class MemoryManager
         }
         return pair;
     }
-    
+    /**
+     * finds the index of the string 
+     * were looking for
+     * @param s string to be searched
+     * @return the int of the index
+     */
     public int findIndexOfHandle(String s)
     {
         byte[] stringAsBytes = s.getBytes();
@@ -98,8 +103,8 @@ public class MemoryManager
         if (searchArray(s))
         {
             byte[] stringAsBytes = s.getBytes();
-            int index = massiveByteArr.indexOf(stringAsBytes[0]);//we may need to check for duplicate string bytes
-            massiveByteArr.set(massiveByteArr.get(index - 2), (byte) 0);
+            int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
+            massiveByteArr.set(massiveByteArr.get(index), (byte) 0);
             Handle temp = new Handle(massiveByteArr.indexOf(massiveByteArr.get(index - 2)),
                     stringAsBytes.length + 2);
             if (handleArr.contains(temp))
@@ -119,9 +124,8 @@ public class MemoryManager
      */
     public boolean checkFlagValid(String s)//under assumption we already know handle exists
     {
-        byte[] stringAsBytes = s.getBytes();
-        int index = massiveByteArr.indexOf(stringAsBytes[0]);//we may need to check for duplicate string bytes
-        if (massiveByteArr.get(index - 2) == 0)
+        int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
+        if (massiveByteArr.get(index) == 0)
         {
             return false;
         }
@@ -152,7 +156,7 @@ public class MemoryManager
     {
         byte[] stringAsBytes = s.getBytes();
         int lengthOfByteArr = stringAsBytes.length;
-        int off = massiveByteArr.indexOf(stringAsBytes[0]) - 2;
+        int off = findIndexOfHandle(s);
         Handle temp = new Handle(off, lengthOfByteArr + 2);
         return handleArr.get(handleArr.indexOf(temp));
     }
