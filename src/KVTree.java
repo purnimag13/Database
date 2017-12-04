@@ -28,19 +28,20 @@ public class KVTree extends BinarySearchTree<KVPair>
      * @param name the name of what needs to be removed
      * @return true if the items have been removed
      */
-    public boolean remove(Handle name)
+    public ArrayList<KVPair> remove(Handle name)
     {
         Iterator<KVPair> itr = this.iterator();
+        ArrayList<KVPair> list = new ArrayList<>();
         while (itr.hasNext())
         {
             KVPair temp = itr.next();
             if (temp.getKey().equals(name))
             {
+                list.add(temp);
                 delete(temp);
-                return true;
             }
         }
-        return false;
+        return list;
     }
     /**
      * This method deletes a particular KVPair from the tree
