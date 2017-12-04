@@ -89,7 +89,8 @@ public class MemoryManager
         
         for (int i = 0; i < offsets.size(); i++)
         {
-            int x = massiveByteArr.indexOf(offsets.get(i));
+            //int x = massiveByteArr.indexOf(offsets.get(i));
+            int x = offsets.get(i);
             byte[] temp = Arrays.copyOfRange(tempArr, x, len + x);
             for (int k = 0; k < temp.length - 1; k++)
             {
