@@ -75,6 +75,23 @@ public class HashTable
         return false;    
     }
     /**
+     * Gets the string when provided a handle value
+     * @param h the handle being searched for
+     * @return the string matched with that handle
+     */
+    public String getName(Handle h)
+    {       
+        for (int i = 0; i < capacity; i++)
+        {
+            if (table[i].getValue() == h)
+            {
+                return table[i].getKey();
+            }
+        }
+        return "none";
+    }
+    
+    /**
      * Gets the handle when provided a key value
      * @param key the key being searched for
      * @return the handle stored for that key value

@@ -127,4 +127,10 @@ public class MemoryManagerTest extends student.TestCase
         assertEquals(7, arr.size());
         
     }
+    
+    public void testSearchAndReturn()
+    {
+        testMM.add("Justin Bieber", "One Time");
+        
+    }
 }
