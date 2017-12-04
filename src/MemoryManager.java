@@ -32,7 +32,7 @@ public class MemoryManager
         Handle[] pair = new Handle[2];
         Handle artistHandle;
         Handle songHandle;
-        if (!searchArray(art))//if u cant find it in the array add
+        if (findIndexOfHandle(art) == -1)//if u cant find it in the array add
         {
             int off = addToArray(art);
             artistHandle = makeNewHandle(art, off);
@@ -49,7 +49,7 @@ public class MemoryManager
                 pair[0] = artistHandle;
             }
         }
-        if (!searchArray(song))
+        if (findIndexOfHandle(song) == -1)
         {
             int off = addToArray(song);
             songHandle = makeNewHandle(song, off);
