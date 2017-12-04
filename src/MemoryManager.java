@@ -93,7 +93,7 @@ public class MemoryManager
             int x = offsets.get(i);
             test = true;
             byte[] temp = Arrays.copyOfRange(tempArr, x, len + x);
-            for (int k = 0; k < temp.length - 1; k++)
+            for (int k = 0; k < temp.length; k++)
             {
                 if (temp[k] != stringAsBytes[k])
                 {

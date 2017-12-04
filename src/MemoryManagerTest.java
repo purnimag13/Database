@@ -108,17 +108,23 @@ public class MemoryManagerTest extends student.TestCase
     /**
      * why is this not showig up
      */
-    public void addMultiple()
+    public void testRemoveMultipleDup()
     {
         testMM.add(artist, song);
         testMM.add("Justin", "Baby");
         testMM.add("Sam Smith", "Not the Only One");
+        testMM.add("Justin", "I love girls");
+        testMM.add("Jay", "Baby");
         int a = testMM.findIndexOfHandle("Justin");
         int s = testMM.findIndexOfHandle("Not the Only One");
+        int t = testMM.findIndexOfHandle("Jay");
         ArrayList<Handle> arr = testMM.findHandle();
         assertFalse(arr.isEmpty());
-        assertEquals(3, a);
-        assertEquals(10, s);
+        assertEquals(16, a);
+        assertEquals(41, s);
+        assertEquals(73, t);
+        testMM.remove("Justin");
+        assertEquals(7, arr.size());
         
     }
 }
