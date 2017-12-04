@@ -105,4 +105,20 @@ public class MemoryManagerTest extends student.TestCase
         assertEquals(2, a);
         assertEquals(10, s);
     }
+    /**
+     * why is this not showig up
+     */
+    public void addMultiple()
+    {
+        testMM.add(artist, song);
+        testMM.add("Justin", "Baby");
+        testMM.add("Sam Smith", "Not the Only One");
+        int a = testMM.findIndexOfHandle("Justin");
+        int s = testMM.findIndexOfHandle("Not the Only One");
+        ArrayList<Handle> arr = testMM.findHandle();
+        assertFalse(arr.isEmpty());
+        assertEquals(3, a);
+        assertEquals(10, s);
+        
+    }
 }
