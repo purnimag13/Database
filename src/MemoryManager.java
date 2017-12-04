@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MemoryManager 
 {
@@ -75,16 +76,48 @@ public class MemoryManager
      */
     public int findIndexOfHandle(String s)
     {
+        byte[] tempArr = new byte[massiveByteArr.size()];
+        for (int j = 0; j < massiveByteArr.size(); j++)
+        {
+            tempArr[j] = massiveByteArr.get(j);
+        }
+        
         byte[] stringAsBytes = s.getBytes();
         int len = stringAsBytes.length;
-        if (massiveByteArr.contains(stringAsBytes[0]))
-        {         
-            for (int i = 0; i < massiveByteArr.size() - 2; i++)
+        boolean test = true;
+        ArrayList<Integer> offsets = indexOfAll(stringAsBytes[0], massiveByteArr);
+        
+        for (int i = 0; i < offsets.size(); i++)
+        {
+            int x = massiveByteArr.indexOf(offsets.get(i));
+            byte[] temp = Arrays.copyOfRange(tempArr, x, len + x);
+            for (int k = 0; k < temp.length; k++)
             {
-                
+                if (temp[k] != stringAsBytes[k])
+                {
+                    test = false;
+                }
+            }
+            if (test)
+            {
+                return offsets.get(i);
             }
         }
         return -1;
+    }
+    /**
+     * index of everything
+     * @param obj
+     * @param list
+     * @return
+     */
+    private ArrayList<Integer> indexOfAll(Object obj, ArrayList<Byte> list)
+    {
+        ArrayList<Integer> indexList = new ArrayList<Integer>();
+        for (int i = 0; i < list.size(); i++)
+            if(obj.equals(list.get(i)))
+                indexList.add(i);
+        return indexList;
     }
     /**
      * this works under the assumption that 
