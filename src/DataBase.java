@@ -279,19 +279,28 @@ public class DataBase
         if (temp[0] != null && temp[1] != null)//artist and song both inserted
         {
             hashArtist.insert(art, temp[0]);
+            System.out.println("|" + art + "| is added to the Artist database.");
+            
             hashSong.insert(song, temp[1]);
+            System.out.println("|" + song + "| is added to the Song database.");
+            
             artistTree.insert(temp[0], temp[1]);
             songTree.insert(temp[1], temp[0]);
         }
         else if (temp[0] != null && temp[1] == null)//artist inserted - song duplicate
         {
             hashArtist.insert(art, temp[0]);
+            System.out.println("|" + art + "| is added to the Artist database.");
+            System.out.println("|" + song + "| duplicates a record already in the Song database");
             artistTree.insert(temp[0], arr.searchAndReturn(song));
             songTree.insert(arr.searchAndReturn(song), temp[0]);
         }
         else if (temp[0] != null && temp[1] == null)//artist duplicate - song inserted
         {
             hashSong.insert(song, temp[1]);
+            System.out.println("|" + art + "| duplicates a record already in the Artist database");
+            System.out.println("|" + song + "| is added to the Song database.");
+            
             artistTree.insert(arr.searchAndReturn(art), temp[1]);
             songTree.insert(temp[1], arr.searchAndReturn(art));
         }
@@ -299,6 +308,8 @@ public class DataBase
         {
             artistTree.insert(arr.searchAndReturn(art), arr.searchAndReturn(song));
             songTree.insert(arr.searchAndReturn(song), arr.searchAndReturn(art));
+            System.out.println("|" + art + "| duplicates a record already in the Artist database");
+            System.out.println("|" + song + "| duplicates a record already in the Song database");
         }
 
     }
