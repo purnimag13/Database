@@ -91,7 +91,7 @@ public class MemoryManager
         {
             int x = massiveByteArr.indexOf(offsets.get(i));
             byte[] temp = Arrays.copyOfRange(tempArr, x, len + x);
-            for (int k = 0; k < temp.length; k++)
+            for (int k = 0; k < temp.length - 1; k++)
             {
                 if (temp[k] != stringAsBytes[k])
                 {
@@ -130,7 +130,7 @@ public class MemoryManager
      */
     public boolean remove(String s)
     {
-        if (searchArray(s))
+        if (findIndexOfHandle(s) != -1)
         {
             byte[] stringAsBytes = s.getBytes();
             int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
