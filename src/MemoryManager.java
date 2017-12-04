@@ -208,6 +208,7 @@ public class MemoryManager
         {
             massiveByteArr.add(stringAsBytes[i]);
         }
+        System.out.println(massiveByteArr.indexOf(flag));
         return massiveByteArr.indexOf(flag);
     }
 
