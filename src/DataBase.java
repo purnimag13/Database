@@ -97,6 +97,8 @@ public class DataBase
                 else if (fileScanner.next() == "tree")
                 {
                     //in order traversal of tree
+                    System.out.println("Printing artist tree: ");
+                    System.out.println("Printing song tree: ");
                 }
             }
             else if (instruction.equals("list"))
@@ -134,6 +136,14 @@ public class DataBase
                 delete(artistName, songName);
             }
         }
+    }
+    /**
+     * prints in order traversal of tree
+     * @param tree
+     */
+    public void printTree(KVTree tree)
+    {
+        
     }
     /**
      * prints all of the songs in the hash table

@@ -67,6 +67,18 @@ public class MemoryManager
         }
         return pair;
     }
+    
+    public void findIndexOfHandle(String s)
+    {
+        byte[] stringAsBytes = s.getBytes();
+        if (massiveByteArr.contains(stringAsBytes[0]))
+        {
+            for (int i = 0; i < massiveByteArr.size(); i++)
+            {
+                
+            }
+        }
+    }
     /**
      * this works under the assumption that 
      * the handles are not used elsewhere
