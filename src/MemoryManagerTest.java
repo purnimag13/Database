@@ -64,7 +64,7 @@ public class MemoryManagerTest extends student.TestCase
         testMM.remove(song);
         Handle[] test = testMM.add(artist, song);
         ArrayList<Handle> arr = testMM.findHandle();
-        assertTrue(arr.contains(test[0]));
+        assertTrue(arr.contains(test[1]));
     }
     /**
      * Tests removing an artist from the database
