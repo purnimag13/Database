@@ -203,14 +203,14 @@ public class MemoryManager
         int lengthOfByteArr = stringAsBytes.length;
         int flag = 1; 
         int lengthOfRecord = lengthOfByteArr + 2; 
+        int end = massiveByteArr.size();
         massiveByteArr.add((byte) flag);
         massiveByteArr.add((byte) lengthOfRecord);
         for (int i = 0; i < lengthOfByteArr; i++)
         {
             massiveByteArr.add(stringAsBytes[i]);
         }
-        System.out.println(massiveByteArr.indexOf(flag));
-        return massiveByteArr.indexOf(flag);
+        return end;
     }
 
 }
