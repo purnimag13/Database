@@ -72,7 +72,7 @@ public class KVTree extends BinarySearchTree<KVPair>
     {
         int count = 0;
         Iterator<KVPair> itr = this.iterator();
-        
+
         while (itr.hasNext())
         {
             KVPair curr = itr.next();
@@ -85,7 +85,7 @@ public class KVTree extends BinarySearchTree<KVPair>
                 count++;
             }
         }
-        
+
         return count;
     }
     /**
@@ -98,7 +98,7 @@ public class KVTree extends BinarySearchTree<KVPair>
     public ArrayList<Handle> findHandlePair(Handle h)
     {
         ArrayList<Handle> list = new ArrayList<>();
-        
+
         Iterator<KVPair> itr = this.iterator();
         while (itr.hasNext())
         {
@@ -108,7 +108,7 @@ public class KVTree extends BinarySearchTree<KVPair>
                 list.add(h);
             }
         }
-        
+
         return list;
     }
     /**
@@ -142,9 +142,9 @@ public class KVTree extends BinarySearchTree<KVPair>
     public ArrayList<Handle> orderTree(ArrayList<Handle> list)
     {
         ArrayList<Handle> ordered = new ArrayList<>();
-        
+
         Iterator<KVPair> itr = this.iterator();
-        
+
         while (itr.hasNext())
         {
             KVPair next = itr.next();
@@ -156,7 +156,28 @@ public class KVTree extends BinarySearchTree<KVPair>
                 }
             }
         }
-        
+
         return ordered;
+    }
+    /**
+     * This method finds if the given kvpair exists in the tree
+     * @param k the key handle
+     * @param v the value handle
+     * @return returns true if the kvpair is in the tree and false
+     * if its not in the tree
+     */
+    public boolean hasKVPair(Handle k, Handle v)
+    {
+        boolean check = false;
+        Iterator<KVPair> itr = this.iterator();
+        while (itr.hasNext())
+        {
+            KVPair curr = itr.next();
+            if (curr.getKey() == k && curr.getValue() == v)
+            {
+                check = false;
+            }
+        }
+        return check;
     }
 }
