@@ -68,16 +68,21 @@ public class MemoryManager
         return pair;
     }
     
-    public void findIndexOfHandle(String s)
+    public int findIndexOfHandle(String s)
     {
         byte[] stringAsBytes = s.getBytes();
         if (massiveByteArr.contains(stringAsBytes[0]))
         {
-            for (int i = 0; i < massiveByteArr.size(); i++)
+            for (int i = 0; i < massiveByteArr.size() - 2; i++)
             {
-                
+                if (i == stringAsBytes[0] && i + 1 == stringAsBytes[1] &&
+                        i + 2 == stringAsBytes[2])
+                {
+                    return i - 2;
+                }
             }
         }
+        return -1;
     }
     /**
      * this works under the assumption that 
