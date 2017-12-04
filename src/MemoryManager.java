@@ -136,7 +136,7 @@ public class MemoryManager
         {
             byte[] stringAsBytes = s.getBytes();
             int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
-            massiveByteArr.set(massiveByteArr.get(index - 2), (byte) 0);
+            massiveByteArr.set(index - 2, (byte) 0);
             Handle temp = new Handle(massiveByteArr.indexOf(massiveByteArr.get(index - 2)),
                     stringAsBytes.length + 2);
             if (handleArr.contains(temp))
