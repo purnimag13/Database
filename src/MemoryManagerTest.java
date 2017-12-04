@@ -39,7 +39,8 @@ public class MemoryManagerTest extends student.TestCase
         Handle[] test1 = testMM.add(artist, song);
         Handle[] test2 = testMM.add(artist, "otherSong");
         ArrayList<Handle> arr = testMM.findHandle();
-        
+        assertTrue(arr.contains(test1[0]));
+        assertFalse(arr.contains(test2[0]));
     }
     
 }

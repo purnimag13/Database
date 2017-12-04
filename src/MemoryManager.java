@@ -76,15 +76,12 @@ public class MemoryManager
     public int findIndexOfHandle(String s)
     {
         byte[] stringAsBytes = s.getBytes();
+        int len = stringAsBytes.length;
         if (massiveByteArr.contains(stringAsBytes[0]))
-        {
+        {         
             for (int i = 0; i < massiveByteArr.size() - 2; i++)
             {
-                if (i == stringAsBytes[0] && i + 1 == stringAsBytes[1] &&
-                        i + 2 == stringAsBytes[2])
-                {
-                    return i - 2;
-                }
+                
             }
         }
         return -1;
