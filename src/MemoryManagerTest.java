@@ -29,6 +29,7 @@ public class MemoryManagerTest extends student.TestCase
         Handle[] test = testMM.add(artist, song);
         ArrayList<Handle> arr = testMM.findHandle();
         assertTrue(arr.contains(test[0]));
+        assertEquals(2, arr.size());
     }
     /**
      * Tests add when the song exists in the database
@@ -94,5 +95,14 @@ public class MemoryManagerTest extends student.TestCase
     {
         boolean check = testMM.remove(artist);
         assertFalse(check);
+    }
+    
+    public void testFindIndex()
+    {
+        testMM.add(artist, song);
+        int a = testMM.findIndexOfHandle(artist);
+        int s = testMM.findIndexOfHandle(song);
+        assertEquals(2, a);
+        assertEquals(0, s);
     }
 }
