@@ -138,9 +138,12 @@ public class MemoryManager
             int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
             massiveByteArr.set(index - 2, (byte) 0);
             Handle temp = new Handle(index - 2, stringAsBytes.length + 2);
-            if (handleArr.contains(temp))
+            for (int i = 0; i < handleArr.size(); i++)
             {
-                handleArr.remove(temp);
+                if (handleArr.get(i).equals(temp))
+                {
+                    handleArr.remove(i);
+                }
             }
             return true;
         }

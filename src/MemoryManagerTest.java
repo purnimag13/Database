@@ -75,7 +75,7 @@ public class MemoryManagerTest extends student.TestCase
         boolean check = testMM.remove(artist);
         ArrayList<Handle> arr = testMM.findHandle();
         assertTrue(check);
-        assertTrue(arr.isEmpty());
+        assertEquals(1, arr.size());
     }    
     /**
      * Tests removing an song from the database
@@ -86,7 +86,7 @@ public class MemoryManagerTest extends student.TestCase
         boolean check = testMM.remove(song);
         ArrayList<Handle> arr = testMM.findHandle();
         assertTrue(check);
-        assertTrue(arr.isEmpty());
+        assertEquals(1, arr.size());
     }
     /**
      * Tests remove when there is nothing in the database
