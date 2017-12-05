@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class DataBase 
 {
-    Scanner fileScanner;
+    Scanner scan;
     ArrayList<Byte> massiveByteArr;
     ArrayList<Handle> handArr;
     int resize = 0;
@@ -30,8 +30,8 @@ public class DataBase
     public DataBase(int hashSize, int blockSize)
     {
         massiveByteArr = new ArrayList<>();
-        handArr = arr.findHandle();
         arr = new MemoryManager();
+        handArr = arr.findHandle();
         hashArtist = new HashTable(hashSize);
         hashSong = new HashTable(hashSize);
         artistTree = new KVTree();
@@ -46,28 +46,40 @@ public class DataBase
     public void readFile(String fileName) throws FileNotFoundException
     {
         File file = new File(fileName);
-        fileScanner = new Scanner(file);
-        while (fileScanner.hasNextLine())
+        scan = new Scanner(file);
+        while (scan.hasNextLine() && scan.hasNext())
         {
-            if (!fileScanner.hasNext()) 
+            if (!scan.hasNext()) 
             {
                 break;
             }
+            String lineScanner = scan.nextLine();
+            Scanner fileScanner = new Scanner(lineScanner);
             String instruction = fileScanner.next();
+            
             if (instruction.equals("insert"))
             {
                 StringBuilder artist = new StringBuilder();
                 StringBuilder songTitle = new StringBuilder();
-                while (fileScanner.next() != "<SEP>")
+                StringBuilder tempString = new StringBuilder();
+                
+                while (!fileScanner.next().contains("<SEP>"))
                 {
                     artist.append(fileScanner.next());
                 }
-                fileScanner.skip("<SEP>");
                 while (fileScanner.hasNext())
                 {
-                    songTitle.append(fileScanner.next()); 
+                    tempString.append(fileScanner.next()); 
                 }
+                String temp = tempString.toString();
+                
+                temp.replace("<SEP>", " ");
+                
+                String sub = temp.substring(0, temp.indexOf(" "));
+                artist.append(sub);
+                String sub2 = temp.substring(temp.indexOf(" ") + 1, temp.length());
                 String artistString = artist.toString();
+                songTitle.append(sub2);
                 String songTitleString = songTitle.toString();
                 insert(artistString, songTitleString);
             }
@@ -152,6 +164,7 @@ public class DataBase
                 delete(artistName, songName);
             }
         }
+        scan.close();
     }
     /**
      * prints all of the songs in the hash table
