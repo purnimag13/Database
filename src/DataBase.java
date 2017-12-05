@@ -179,7 +179,7 @@ public class DataBase
         {
             hashSong.print();
         }
-        System.out.println("total songs: " + hashSong.getTable().length);
+        System.out.println("total songs: " + hashSong.getSize());
     }
     /**
      * prints all the artists in the hash table
@@ -191,7 +191,7 @@ public class DataBase
         {
             hashArtist.print();
         }
-        System.out.println("total artists: " + hashArtist.getTable().length);
+        System.out.println("total artists: " + hashArtist.getSize());
     }
     /**
      * lists all the songs by this artist

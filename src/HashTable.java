@@ -13,6 +13,7 @@ public class HashTable
     private int capacity;
 
     private int size;
+    
 
     public HashTable(int initSize)
     {
@@ -169,7 +170,7 @@ public class HashTable
             // but I also don't know how else to reinsert
             for (int i = 0; i < temp.length; i++)
             {
-                insert(temp[i].getKey(), temp[i].getValue());
+                insert(temp[i].getKey(), temp[i].getValue());                
             }
         }
         //Checks to see if key is already in the table
@@ -200,6 +201,7 @@ public class HashTable
             {
                 h = table[i].getValue();
                 table[i] = tombstone;
+                size--;
             }
         }
 
@@ -213,7 +215,7 @@ public class HashTable
     {
         for (int i = 0; i < this.capacity; i++)
         {
-            if (table[i].getKey() != null)
+            if (table[i] != null)
             {
                 System.out.println(this.getTable()[i].getKey().toString() 
                         + getIndex(table[i].getKey())); 
@@ -227,6 +229,15 @@ public class HashTable
     public boolean isEmpty()
     {
         return size == 0;
+    }
+    /**
+     * This method returns the size of the hash table where size
+     * is the number of elements
+     * @return size or number of elements in the table
+     */
+    public int getSize()
+    {
+        return this.size;
     }
     /**
      * The entry class that takes a generic key and generic value

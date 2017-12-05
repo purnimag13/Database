@@ -131,6 +131,8 @@ public class MemoryManagerTest extends student.TestCase
     public void testSearchAndReturn()
     {
         testMM.add("Justin Bieber", "One Time");
+        ArrayList<Handle> arr = testMM.findHandle();
+        Handle test = testMM.searchAndReturn("Justin Bieber");
         
     }
 }
