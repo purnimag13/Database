@@ -22,10 +22,16 @@ import java.io.FileNotFoundException;
  * main file
  * @author Purnima Gosh
  * @author taralaughlin
+ * @version 12.05.2017
  *
  */
 public class SongSearch 
 {
+    /**
+     * does all the good stuff
+     * @param args argument to see
+     * @throws FileNotFoundException if the file isnt there itll throw
+     */
     public static void main(String[] args) throws FileNotFoundException
     {
         DataBase i = new DataBase();

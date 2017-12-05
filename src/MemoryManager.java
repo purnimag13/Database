@@ -1,11 +1,19 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * @author purnima Gosh
+ * @author taralaughlin
+ * @version 12.05.2017
+ *
+ */
 public class MemoryManager 
 {
     ArrayList<Byte> massiveByteArr;
     ArrayList<Handle> handleArr;
 
+    /**
+     * memory manager constructor
+     */
     public MemoryManager()
     {
         massiveByteArr = new ArrayList<>();
@@ -13,7 +21,7 @@ public class MemoryManager
     }
     /**
      * gives other things access to the list of handles
-     * @return
+     * @return ArrayList<Handle> of the handles
      */
     public ArrayList<Handle> findHandle()
     {
@@ -21,8 +29,8 @@ public class MemoryManager
     }
     /**
      * adds the bytes to byte arr
-     * @param art
-     * @param song
+     * @param art artists to add
+     * @param song songs to add
      * @return the handles that were just added to make it
      * easier to add the KVPairs and hash table handles
      * will return null if nothing was changed
@@ -81,12 +89,12 @@ public class MemoryManager
         {
             tempArr[j] = massiveByteArr.get(j);
         }
-        
+
         byte[] stringAsBytes = s.getBytes();
         int len = stringAsBytes.length;
         boolean test = true;
         ArrayList<Integer> offsets = indexOfAll(stringAsBytes[0], massiveByteArr);
-        
+
         for (int i = 0; i < offsets.size(); i++)
         {
             //int x = massiveByteArr.indexOf(offsets.get(i));
@@ -109,9 +117,9 @@ public class MemoryManager
     }
     /**
      * index of everything
-     * @param obj
-     * @param list
-     * @return
+     * @param obj object looked for
+     * @param list list searched through
+     * @return ArrayList<Integer> of the index of the elements
      */
     private ArrayList<Integer> indexOfAll(Object obj, ArrayList<Byte> list)
     {
@@ -127,8 +135,9 @@ public class MemoryManager
      * finds flag and changes it to zero
      * removes the old handle from the handle array 
      * to avoid confusion when a new one is added
-     * @param art
-     * @param song
+     * @param art artist to be removed
+     * @param song song to be looked at
+     * @return boolean true or false
      */
     public boolean remove(String s)
     {
@@ -148,7 +157,6 @@ public class MemoryManager
             return true;
         }
         return false;
-        
     }
     /**
      * if the handle exists in the array
@@ -164,14 +172,13 @@ public class MemoryManager
             return false;
         }
         return true;
-
     }
     /**
      * makes a new handle with the information provided
      * aka the string that is the artist or song 
-     * @param s
-     * @param offset
-     * @return
+     * @param s string looked at
+     * @param offset offset of handle
+     * @return the handle record
      */
     public Handle makeNewHandle(String s, int offset)
     {
@@ -183,21 +190,26 @@ public class MemoryManager
     /**
      * returns the handle of the string that
      * is being searched for
-     * @param s
-     * @return
+     * @param s string searched
+     * @return Handle looked for
      */
     public Handle searchAndReturn(String s)
     {
         byte[] stringAsBytes = s.getBytes();
         int lengthOfByteArr = stringAsBytes.length;
         int off = findIndexOfHandle(s);
-        Handle temp = new Handle(off, lengthOfByteArr + 2);
-        return handleArr.get(handleArr.indexOf(temp));
+        if (off != -1)
+        {
+            Handle temp = new Handle(off, lengthOfByteArr + 2);
+            return handleArr.get(handleArr.indexOf(temp)); 
+        }
+        return null;
+
     }
     /**
      * returns the offset of what was just added to the byte array
-     * @param s
-     * @return
+     * @param s string to be added
+     * @return int of the offset
      */
     public int addToArray(String s)
     {

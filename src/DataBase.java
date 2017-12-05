@@ -1,4 +1,4 @@
-import java.io.File;
+import java.io.File; 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,10 +32,8 @@ public class DataBase
         massiveByteArr = new ArrayList<>();
         handArr = arr.findHandle();
         arr = new MemoryManager();
-
         hashArtist = new HashTable(100);
         hashSong = new HashTable(100);
-
         artistTree = new KVTree();
         songTree = new KVTree();
     }
@@ -106,24 +104,40 @@ public class DataBase
                 if (fileScanner.next() == "artist")
                 {
                     HashTable.Entry[] temp = hashSong.getTable();
-                    ArrayList<Handle> songs = listArtist(fileScanner.next());//list of song handles
-                    for (int i = 0; i < temp.length; i++)
+                    String artist = fileScanner.next();
+                    ArrayList<Handle> songs = listArtist(artist);//list of song handles
+                    if (songs.size() == 0)
                     {
-                        if (songs.get(i) == temp[i].getValue())
+                        System.out.println("|" + artist + "| does not exist in the Artist database.");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < temp.length; i++)
                         {
-                            System.out.println(temp[i].toString());
+                            if (songs.get(i) == temp[i].getValue())
+                            {
+                                System.out.println(temp[i].toString());
+                            }
                         }
                     }
                 }
                 else if (fileScanner.next() == "song")
                 {
                     HashTable.Entry[] temp = hashArtist.getTable();
-                    ArrayList<Handle> artists = listSong(fileScanner.next());
-                    for (int i = 0; i < temp.length; i++)
+                    String songs = fileScanner.next();
+                    ArrayList<Handle> artists = listSong(songs);
+                    if (artists.size() == 0)
                     {
-                        if (artists.get(i) == temp[i].getValue())
+                        System.out.println("|" + songs + "| does not exist in the Song database."); 
+                    }
+                    else
+                    {
+                        for (int i = 0; i < temp.length; i++)
                         {
-                            System.out.println(temp[i].toString());
+                            if (artists.get(i) == temp[i].getValue())
+                            {
+                                System.out.println(temp[i].toString());
+                            }
                         }
                     }
                 }
@@ -143,7 +157,7 @@ public class DataBase
      */
     public void printTree(KVTree tree)
     {
-
+        // TODO finish this bitch
     }
     /**
      * prints all of the songs in the hash table
@@ -177,6 +191,10 @@ public class DataBase
     public ArrayList<Handle> listArtist(String s)
     {
         Handle temp = arr.searchAndReturn(s);
+        if (temp.equals(null))
+        {
+            System.out.println("|" + s + "| does not exist in the Artist database.");  
+        }
         ArrayList<Handle> arrHandle = artistTree.findHandlePair(temp);
         return artistTree.orderTree(arrHandle);
     }
@@ -263,20 +281,34 @@ public class DataBase
         {
             tempArtist = arr.searchAndReturn(art);
             tempSong = arr.searchAndReturn(title);
-            artistTree.delete(tempArtist, tempSong);
-            songTree.delete(tempSong, tempArtist);
+
+            boolean checkArt = artistTree.delete(tempArtist, tempSong);
+            boolean checkSong = songTree.delete(tempSong, tempArtist);
+
+            if (!checkArt && !checkSong)
+            {
+                System.out.println("The KVPair (|" + tempArtist + "|,|" + tempSong + "|) was not found in the database.");
+                System.out.println("The KVPair (|" + tempSong + "|,|" + tempArtist + "|) was not found in the database.");
+            }
+            else
+            {
+                System.out.println("The KVPair (|" + tempArtist + "|,|" + tempSong + "|) was deleted from the database.");
+                System.out.println("The KVPair (|" + tempSong + "|,|" + tempArtist + "|) was deleted from the database."); 
+            }
+
             if (artistTree.countHandles(tempArtist) == 0)
             {
                 arr.remove(art);
                 hashArtist.remove(art);
+                System.out.println("|" + art + "| is deleted from the Artist database.");
             }
             if (songTree.countHandles(tempSong) == 0)
             {
                 arr.remove(title);
                 hashSong.remove(title);
+                System.out.println("|" + title + "| is deleted from the Song database.");
             }
         }
-
         return true;
     }
     /**
@@ -436,6 +468,5 @@ public class DataBase
                         + temp[1].getOff() + "," + temp[0].getOff() + ") is added to the tree.");
             }
         }
-
     }
 }
