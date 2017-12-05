@@ -85,26 +85,28 @@ public class DataBase
             }
             else if (instruction.equals("remove"))
             {
-                if (fileScanner.next() == "artist")
+                String next = fileScanner.next();
+                if (next.equals("artist"))
                 {
                     removeArtist(fileScanner.next());
                 }
-                else if (fileScanner.next() == "song")
+                else if (next.equals("song"))
                 {
                     removeSong(fileScanner.next());
                 }
             }
             else if (instruction.equals("print"))
             {
-                if (fileScanner.next() == "artist")
+                String next = fileScanner.next();
+                if (next.equals("artist"))
                 {
                     printArtist();
                 }
-                else if (fileScanner.next() == "song")
+                else if (next.equals("song"))
                 {
                     printSong();
                 }
-                else if (fileScanner.next() == "tree")
+                else if (next.equals("tree"))
                 {
                     //in order traversal of tree
                     System.out.println("Printing artist tree: ");
@@ -115,7 +117,8 @@ public class DataBase
             }
             else if (instruction.equals("list"))
             {
-                if (fileScanner.next() == "artist")
+                String next = fileScanner.next();
+                if (next.equals("artist"))
                 {
                     HashTable.Entry[] temp = hashSong.getTable();
                     String artist = fileScanner.next();
@@ -135,7 +138,7 @@ public class DataBase
                         }
                     }
                 }
-                else if (fileScanner.next() == "song")
+                else if (next.equals("song"))
                 {
                     HashTable.Entry[] temp = hashArtist.getTable();
                     String songs = fileScanner.next();
