@@ -90,7 +90,6 @@ public class HashTable
         }
         return "none";
     }
-    
     /**
      * Gets the handle when provided a key value
      * @param key the key being searched for
@@ -218,7 +217,6 @@ public class HashTable
             {
                 System.out.println(this.getTable()[i].getKey().toString() 
                         + getIndex(table[i].getKey())); 
-
             }
         }
     }
@@ -276,9 +274,5 @@ public class HashTable
         {
             return " |" + key + "| "; 
         }
-
-
     }
-
-
 }

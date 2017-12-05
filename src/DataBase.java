@@ -27,13 +27,13 @@ public class DataBase
     /**
      * database constructor
      */
-    public DataBase()
+    public DataBase(int hashSize, int blockSize)
     {
         massiveByteArr = new ArrayList<>();
         handArr = arr.findHandle();
         arr = new MemoryManager();
-        hashArtist = new HashTable(100);
-        hashSong = new HashTable(100);
+        hashArtist = new HashTable(hashSize);
+        hashSong = new HashTable(hashSize);
         artistTree = new KVTree();
         songTree = new KVTree();
     }
@@ -96,7 +96,9 @@ public class DataBase
                 {
                     //in order traversal of tree
                     System.out.println("Printing artist tree: ");
+                    artistTree.printTree();
                     System.out.println("Printing song tree: ");
+                    songTree.printTree();
                 }
             }
             else if (instruction.equals("list"))
@@ -150,14 +152,6 @@ public class DataBase
                 delete(artistName, songName);
             }
         }
-    }
-    /**
-     * prints in order traversal of tree
-     * @param tree
-     */
-    public void printTree(KVTree tree)
-    {
-        // TODO finish this bitch
     }
     /**
      * prints all of the songs in the hash table

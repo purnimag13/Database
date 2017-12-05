@@ -28,7 +28,14 @@ public class BinarySearchTree<T extends Comparable<? super T>>
     {
         root = null;
     }
-
+    /**
+     * root
+     * @return BinaryNode<T> root
+     */
+    public BinaryNode<T> getRoot()
+    {
+        return root;
+    }
     /**
      * Checks to see if the tree is empty.   
      * @return Whether or not the tree is empty. 
@@ -209,7 +216,7 @@ public class BinarySearchTree<T extends Comparable<? super T>>
      *
      * @param <T> The generic parameter. 
      */
-    private static class BinaryNode<T>
+    static class BinaryNode<T>
     {
         private BinaryNode<T> left;
         private BinaryNode<T> right;
@@ -322,7 +329,7 @@ public class BinarySearchTree<T extends Comparable<? super T>>
         {
             return 0;
         }
-        if (sRoot.element == x)
+        if (sRoot.element.equals(x))
         {
             return height;
         }
@@ -347,6 +354,7 @@ public class BinarySearchTree<T extends Comparable<? super T>>
     {
         return size(root);
     }
+    
 
     /**
      * This method is the helper method to find the size of

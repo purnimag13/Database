@@ -34,8 +34,10 @@ public class SongSearch
      */
     public static void main(String[] args) throws FileNotFoundException
     {
-        DataBase i = new DataBase();
-        i.readFile(args[0]);
+        int hash = Integer.parseInt(args[0]);
+        int block = Integer.parseInt(args[1]);
+        DataBase i = new DataBase(hash, block);
+        i.readFile(args[2]);
     }
 
 }

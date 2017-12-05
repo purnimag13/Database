@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 /**
+ * keeps track of the big byte array 
  * @author purnima Gosh
  * @author taralaughlin
  * @version 12.05.2017
- *
  */
 public class MemoryManager 
 {

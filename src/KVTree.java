@@ -1,6 +1,11 @@
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Iterator;
-
+/**
+ * a BST of KV pairs specifically
+ * @author Purnima Gosh
+ * @author taralaughlin
+ *@version 12.05.2017
+ */
 public class KVTree extends BinarySearchTree<KVPair>
 {
     /**
@@ -180,5 +185,49 @@ public class KVTree extends BinarySearchTree<KVPair>
             }
         }
         return check;
+    }
+    public void printTree() 
+    {
+        ArrayList<KVPair> arr = makeKVPairList();
+        if (super.getRoot() != null)
+        {
+            for (KVPair k: arr)
+            {
+                for (int i = 0; i < super.getHeight(k); i++)
+                {
+                    System.out.println(" ");
+                }
+                System.out.println("(" + k.getKey().getOff() + "," + k.getValue().getOff() + ")");
+            }
+            
+        } 
+    }
+    /**
+     * private but still commenting it places the nodes in order
+     * 
+     * @param n
+     *            the binary node to place
+     */
+    private ArrayList<KVPair> inOrder(BinaryNode<KVPair> n)
+    {
+        ArrayList<KVPair> arr = new ArrayList<>();
+        if (n == null)
+        {
+            return null;
+        }
+        if (n.getLeft() != null)
+        {
+            inOrder(n.getLeft());
+        }
+        arr.add(n.getElement());
+        if (n.getRight() != null)
+        {
+            inOrder(n.getRight());
+        }
+        return arr;
+    }
+    private ArrayList<KVPair> makeKVPairList() 
+    {
+        return inOrder(super.getRoot());
     }
 }
