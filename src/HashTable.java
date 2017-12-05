@@ -13,7 +13,7 @@ public class HashTable
     private int capacity;
 
     private int size;
-    
+
 
     public HashTable(int initSize)
     {
@@ -68,9 +68,12 @@ public class HashTable
     {
         for (int i = 0; i < capacity; i++)
         {
-            if (table[i].getKey() == key)
+            if (table[i] != null)
             {
-                return true;
+                if (table[i].getKey() == key)
+                {
+                    return true;
+                }
             }
         }
         return false;    
@@ -102,9 +105,12 @@ public class HashTable
 
         for (int i = 0; i < capacity; i++)
         {
-            if (table[i].getKey() == key)
+            if (table[i] != null)
             {
-                return table[i].getValue();
+                if (table[i].getKey() == key)
+                {
+                    return table[i].getValue();
+                }
             }
         }
 

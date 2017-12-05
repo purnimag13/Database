@@ -88,11 +88,31 @@ public class DataBase
                 String next = fileScanner.next();
                 if (next.equals("artist"))
                 {
-                    removeArtist(fileScanner.next());
+                    StringBuilder str = new StringBuilder();
+                    while (fileScanner.hasNext())
+                    {                        
+                        str.append(fileScanner.next());
+                        if (fileScanner.hasNext())
+                        {
+                            str.append(" ");
+                        }
+                    }
+                    String obj = str.toString();
+                    removeArtist(obj);
                 }
                 else if (next.equals("song"))
                 {
-                    removeSong(fileScanner.next());
+                    StringBuilder str = new StringBuilder();
+                    while (fileScanner.hasNext())
+                    {                        
+                        str.append(fileScanner.next());
+                        if (fileScanner.hasNext())
+                        {
+                            str.append(" ");
+                        }
+                    }
+                    String obj = str.toString();
+                    removeSong(obj);
                 }
             }
             else if (instruction.equals("print"))
@@ -232,7 +252,7 @@ public class DataBase
         Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
         if (!hashArtist.find(obj))
         {
-            System.out.println(hashArtist.get(obj).toString() + " does not exist in the artist database.");
+            System.out.println(obj + " does not exist in the artist database.");
         }
         else
         {
