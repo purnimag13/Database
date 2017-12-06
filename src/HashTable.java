@@ -223,8 +223,8 @@ public class HashTable
         {
             if (table[i] != null)
             {
-                System.out.println(this.getTable()[i].getKey().toString() 
-                        + getIndex(table[i].getKey())); 
+                System.out.println("|" + this.getTable()[i].getKey() + "|"
+                        + " " + i); 
             }
         }
     }

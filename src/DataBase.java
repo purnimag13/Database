@@ -254,11 +254,7 @@ public class DataBase
      */
     public void printSong()
     {
-        int length = hashSong.getTable().length;
-        for (int i = 0; i < length; i++)
-        {
-            hashSong.print();
-        }
+        hashSong.print();        
         System.out.println("total songs: " + hashSong.getSize());
     }
     /**
@@ -266,11 +262,7 @@ public class DataBase
      */
     public void printArtist()
     {
-        int length = hashArtist.getTable().length;
-        for (int i = 0; i < length; i++)
-        {
-            hashArtist.print();
-        }
+        hashArtist.print();
         System.out.println("total artists: " + hashArtist.getSize());
     }
     /**
