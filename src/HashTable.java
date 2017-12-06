@@ -204,16 +204,20 @@ public class HashTable
         Handle h = null;
         Handle blank = new Handle(-1, -1);
         Entry tombstone = new Entry("Tombstone", blank);
-        for (int i = 0; i < capacity; i++)
+        
+        int hashSlot = hashFunc(key, capacity);
+        int probeCount = 0;
+        while (table[hashSlot] != null)
         {
-            if (table[i].getKey().equals(key))
+            probeCount++;
+            if (table[hashSlot].equals(key))
             {
-                h = table[i].getValue();
-                table[i] = tombstone;
-                size--;
+                h = table[hashSlot].getValue();
+                table[hashSlot] = tombstone;
+                size--; 
             }
+            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
         }
-
         return h;
     }
 
