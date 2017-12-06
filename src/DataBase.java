@@ -347,9 +347,9 @@ public class DataBase
     public String findSong(int offset, int len)
     {
         String songName = "";
-        for (int i = 0; i < len; i++)
+        for (int i = 0; i < len - 3; i++)
         {
-            songName = songName + (char)(this.massiveByteArr.get(i + offset) & 0xFF);
+            songName = songName + (char)(this.arr.massiveByteArr.get(i + offset + 3) & 0xFF);
         }
         return songName;
     }

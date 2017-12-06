@@ -227,11 +227,12 @@ public class MemoryManager
         byte[] stringAsBytes = s.getBytes();
         int lengthOfByteArr = stringAsBytes.length;
         int flag = 1; 
-        int lengthOfRecord = lengthOfByteArr; 
         int end = massiveByteArr.size();
         massiveByteArr.add((byte) flag);
-        byte[] b = ByteBuffer.allocate(4).putInt(lengthOfByteArr).array();
-        for (int i = 2; i < b.length; i++)
+        byte[] b = new byte[2];
+        b[0] = (byte) lengthOfByteArr;
+        b[1] = (byte) (lengthOfByteArr >> 8);
+        for (int i = 0; i < b.length; i++)
         {
             massiveByteArr.add(b[i]);
         }
