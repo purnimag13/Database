@@ -2,25 +2,24 @@
 public class HandleTest extends student.TestCase
 {
     Handle hand;
-    Handle hand1;
+    Handle empty;
     Handle hand2;
     /**
      * constructor for handle class
      */
     public void setUp()
     {
-//        hand = new Handle(5, "Tara");
-//        hand1 = new Handle(5, "Tara");
-//        hand2 = new Handle(2,"Coco");
+        hand = new Handle(4, 7);
+        empty = null;
+        hand2 = new Handle(4, 7);
     }
     /**
      * tests getters and setters and equals
      */
-    public void testGetSet()
+    public void testEquals()
     {
-//        assertEquals(hand.getOff(), 5);
-//        assertEquals(hand.getIdent(), "Tara");
-//        hand.setIdent("Coco");        
+        assertFalse(hand.equals(empty));
+        assertFalse(hand.equals(null));
     }
 
 }

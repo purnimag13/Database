@@ -194,17 +194,16 @@ public class KVTree extends BinarySearchTree<KVPair>
      */
     public boolean hasKVPair(Handle k, Handle v)
     {
-        boolean check = false;
         Iterator<KVPair> itr = this.iterator();
         while (itr.hasNext())
         {
             KVPair curr = itr.next();
-            if (curr.getKey() == k && curr.getValue() == v)
+            if (curr.getKey().equals(k) && curr.getValue().equals(v))
             {
-                check = false;
+                return true;
             }
         }
-        return check;
+        return false;
     }
     public void printTree() 
     {
