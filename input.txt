@@ -470,8 +470,5 @@ remove song A True
 remove artist themselves
 remove song Crayon Sharpener
 print song
-<<<<<<< HEAD
 print artist
-=======
 print artist
->>>>>>> 3d02f3c848f1c85a5dacefe6ea2466a5b8c2f25f
