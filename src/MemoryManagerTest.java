@@ -12,12 +12,16 @@ import java.util.ArrayList;
 public class MemoryManagerTest extends student.TestCase
 {
     MemoryManager testMM;
+    HashTable art;
+    HashTable song1;
     String artist;
     String song;
     
     public void setUp()
     {
-        testMM = new MemoryManager();
+        song1 = new HashTable(100);
+        art = new HashTable(100);
+        testMM = new MemoryManager(art, song1);
         artist = "artist";
         song = "song";
     }

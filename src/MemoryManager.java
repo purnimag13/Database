@@ -11,14 +11,18 @@ public class MemoryManager
 {
     ArrayList<Byte> massiveByteArr;
     ArrayList<Handle> handleArr;
+    HashTable artHash;
+    HashTable songHash;
 
     /**
      * memory manager constructor
      */
-    public MemoryManager()
+    public MemoryManager(HashTable art, HashTable song)
     {
         massiveByteArr = new ArrayList<>();
         handleArr = new ArrayList<>();
+        artHash = art;
+        songHash = song;
     }
     /**
      * gives other things access to the list of handles
@@ -41,7 +45,7 @@ public class MemoryManager
         Handle[] pair = new Handle[2];
         Handle artistHandle;
         Handle songHandle;
-        if (findIndexOfHandle(art) == -1)//if u cant find it in the array add
+        if (!artHash.find(art))//if u cant find it in the array add
         {
             int off = addToArray(art);
             artistHandle = makeNewHandle(art, off);
@@ -50,15 +54,16 @@ public class MemoryManager
         }
         else // if you can find it, check the flag
         {
-            if (!checkFlagValid(art))
-            {
-                int off = addToArray(art);
-                artistHandle = makeNewHandle(art, off);
-                handleArr.add(artistHandle); 
-                pair[0] = artistHandle;
-            }
+//            if (!checkFlagValid(art))
+//            {
+//                int off = addToArray(art);
+//                artistHandle = makeNewHandle(art, off);
+//                handleArr.add(artistHandle); 
+//                pair[0] = artistHandle;
+//            }
+            pair[0] = null;
         }
-        if (findIndexOfHandle(song) == -1)
+        if (!songHash.find(song))
         {
             int off = addToArray(song);
             songHandle = makeNewHandle(song, off);
@@ -67,13 +72,14 @@ public class MemoryManager
         }
         else
         {
-            if (!checkFlagValid(song))
-            {
-                int off = addToArray(song);
-                songHandle = makeNewHandle(song, off);
-                handleArr.add(songHandle); 
-                pair[1] = songHandle;
-            }
+//            if (!checkFlagValid(song))
+//            {
+//                int off = addToArray(song);
+//                songHandle = makeNewHandle(song, off);
+//                handleArr.add(songHandle); 
+//                pair[1] = songHandle;
+//            }
+            pair[1] = null;
         }
         return pair;
     }

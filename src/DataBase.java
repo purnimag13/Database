@@ -30,10 +30,12 @@ public class DataBase
     public DataBase(int hashSize, int blockSize)
     {
         massiveByteArr = new ArrayList<>();
-        arr = new MemoryManager();
-        handArr = arr.findHandle();
+        
+        
         hashArtist = new HashTable(hashSize);
         hashSong = new HashTable(hashSize);
+        arr = new MemoryManager(hashArtist, hashSong);
+        handArr = arr.findHandle();
         artistTree = new KVTree();
         songTree = new KVTree();
     }
@@ -300,7 +302,8 @@ public class DataBase
         Handle offArtV;
         Handle offSongK;
         Handle offSongV;
-        Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
+        //Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
+        Handle temp = hashArtist.get(obj);
         if (!hashArtist.find(obj))
         {
             System.out.println("|" + obj + "| does not exist in the artist database.");
@@ -321,11 +324,11 @@ public class DataBase
                 offSongK = deletedSong.get(i).getKey();
                 offSongV = deletedSong.get(i).getValue();
                 
-                int artKeyOffset = offArtK.getOff() - 3;
+                int artKeyOffset = offArtK.getOff() + 3;
                 int artKeyLength = offArtK.getLen();
                 String artistName = this.findSong(artKeyOffset, artKeyLength);
-                int songValueOffset = offArtV.getOff() - 3;
-                int songValueLength = offArtV.getOff();
+                int songValueOffset = offArtV.getOff() + 3;
+                int songValueLength = offArtV.getLen();
                 String songTitle = this.findSong(songValueOffset, songValueLength);
               
                 System.out.println("The KVPair (|" + artistName + "|,|" + songTitle + "|) is deleted from the tree.");
@@ -336,7 +339,9 @@ public class DataBase
             {
                 if (artistTree.countHandles(deletedArt.get(i).getValue()) == 0)
                 {
-                    String songDeleted = hashSong.getName(deletedArt.get(i).getValue());
+                    int x = deletedArt.get(i).getValue().getOff() + 3;
+                    int y = deletedArt.get(i).getValue().getLen();
+                    String songDeleted = this.findSong(x, y);
                     arr.remove(songDeleted);
                     hashSong.remove(songDeleted);
                     System.out.println("|" + songDeleted + "| is deleted from the Song database.");
@@ -347,9 +352,9 @@ public class DataBase
     public String findSong(int offset, int len)
     {
         String songName = "";
-        for (int i = 0; i < len - 3; i++)
+        for (int i = 0; i < len; i++)
         {
-            songName = songName + (char)(this.arr.massiveByteArr.get(i + offset + 3) & 0xFF);
+            songName = songName + (char)(this.arr.massiveByteArr.get(i + offset) & 0xFF);
         }
         return songName;
     }
@@ -427,10 +432,12 @@ public class DataBase
         {
             return false;
         }
-        if (arr.searchAndReturn(art) != null && arr.searchAndReturn(title) != null)
-        {
-            tempArtist = arr.searchAndReturn(art);
-            tempSong = arr.searchAndReturn(title);
+//        if (arr.searchAndReturn(art) != null && arr.searchAndReturn(title) != null)
+//        {
+        tempArtist = hashArtist.get(art);
+        tempSong = hashSong.get(title);
+            //tempArtist = arr.searchAndReturn(art);
+            //tempSong = arr.searchAndReturn(title);
 
             boolean checkArt = artistTree.delete(tempArtist, tempSong);
             boolean checkSong = songTree.delete(tempSong, tempArtist);
@@ -458,7 +465,7 @@ public class DataBase
                 hashSong.remove(title);
                 System.out.println("|" + title + "| is deleted from the song database.");
             }
-        }
+//        }
         return true;
     }
 
@@ -514,7 +521,7 @@ public class DataBase
         {
             hashArtist.insert(art, temp[0]);
             System.out.println("|" + art + "| is added to the Artist database.");
-            System.out.println("|" + song + "| duplicates a record already in the Song database");
+            System.out.println("|" + song + "| duplicates a record already in the Song database.");
             Handle oldSong = hashSong.get(song);
             
             if (artistTree.hasKVPair(temp[0], temp[1]))
@@ -569,9 +576,9 @@ public class DataBase
             System.out.println("|" + song + "| duplicates a record already in the Song database.");                       
 
             System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
-                    + songIndex.getOff() + "," + artistIndex.getOff() + ") duplicates a record already in the tree.");
-            System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
                     + artistIndex.getOff() + "," + songIndex.getOff() + ") duplicates a record already in the tree.");
+            System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
+                    + songIndex.getOff() + "," + artistIndex.getOff() + ") duplicates a record already in the tree.");
 
             //we don't need this because if they're both null then its definitely a duplicate
             //            if (artistTree.hasKVPair(temp[0], temp[1]))

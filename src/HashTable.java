@@ -133,8 +133,20 @@ public class HashTable
                 }
             }
         }
-
         return h;
+//        Handle h = null;
+//        int hashSlot = hashFunc(key, capacity);
+//        int probeCount = 0;
+//        while (table[hashSlot] != null)
+//        {
+//            probeCount++;
+//            if (table[hashSlot].equals(key))
+//            {
+//                return table[hashSlot].getValue();
+//            }
+//            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
+//        }
+//        return h;
     }
     /**
      * Gets the index of a specific key
@@ -230,7 +242,7 @@ public class HashTable
         while (table[hashSlot] != null)
         {
             probeCount++;
-            if (table[hashSlot].equals(key))
+            if (table[hashSlot].getKey().equals(key))
             {
                 h = table[hashSlot].getValue();
                 table[hashSlot] = tombstone;
@@ -248,7 +260,7 @@ public class HashTable
     {
         for (int i = 0; i < this.capacity; i++)
         {
-            if (table[i] != null)
+            if (table[i] != null && !table[i].getKey().equals("Tombstone"))
             {
                 System.out.println("|" + this.getTable()[i].getKey() + "|"
                         + " " + i); 
