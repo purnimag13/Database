@@ -188,7 +188,7 @@ public class MemoryManager
     {
         byte[] stringAsBytes = s.getBytes();
         int lengthOfByteArr = stringAsBytes.length;
-        Handle temp = new Handle(offset, lengthOfByteArr + 2);
+        Handle temp = new Handle(offset, lengthOfByteArr);
         return temp;
     }
     /**
