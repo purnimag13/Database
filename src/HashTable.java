@@ -70,7 +70,7 @@ public class HashTable
         {
             if (table[i] != null)
             {
-                if (table[i].getKey() == key)
+                if (table[i].getKey().equals(key))
                 {
                     return true;
                 }
@@ -290,7 +290,7 @@ public class HashTable
         /**
          * @return string to String
          */
-        public String toString()
+        public String suckADick()
         {
             return " |" + key + "| "; 
         }

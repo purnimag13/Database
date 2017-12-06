@@ -102,8 +102,9 @@ public class DataBase
                 {
                     StringBuilder str = new StringBuilder();
                     while (fileScanner.hasNext())
-                    {                        
-                        str.append(fileScanner.next());
+                    { 
+                        String next1 = fileScanner.next();
+                        str.append(next1);
                         if (fileScanner.hasNext())
                         {
                             str.append(" ");
@@ -116,8 +117,9 @@ public class DataBase
                 {
                     StringBuilder str = new StringBuilder();
                     while (fileScanner.hasNext())
-                    {                        
-                        str.append(fileScanner.next());
+                    {     
+                        String next1 = fileScanner.next();
+                        str.append(next1);
                         if (fileScanner.hasNext())
                         {
                             str.append(" ");
@@ -246,6 +248,7 @@ public class DataBase
 //                String songName = fileScanner.next();
 //                delete(artistName, songName);
             }
+            fileScanner.close();
         }
         scan.close();
     }
@@ -420,13 +423,13 @@ public class DataBase
 
             if (!checkArt && !checkSong)
             {
-                System.out.println("The KVPair (|" + tempArtist + "|,|" + tempSong + "|) was not found in the database.");
-                System.out.println("The KVPair (|" + tempSong + "|,|" + tempArtist + "|) was not found in the database.");
+                System.out.println("The KVPair (|" + art + "|,|" + title + "|) was not found in the database.");
+                System.out.println("The KVPair (|" + title + "|,|" + art + "|) was not found in the database.");
             }
             else
             {
-                System.out.println("The KVPair (|" + tempArtist + "|,|" + tempSong + "|) was deleted from the database.");
-                System.out.println("The KVPair (|" + tempSong + "|,|" + tempArtist + "|) was deleted from the database."); 
+                System.out.println("The KVPair (|" + art + "|,|" + title + "|) was deleted from the database.");
+                System.out.println("The KVPair (|" + title + "|,|" + art + "|) was deleted from the database."); 
             }
 
             if (artistTree.countHandles(tempArtist) == 0)
@@ -523,7 +526,7 @@ public class DataBase
             hashSong.insert(song, temp[1]);
             Handle oldArtist = hashArtist.get(art);
 
-            System.out.println("|" + art + "| duplicates a record already in the Artist database");
+            System.out.println("|" + art + "| duplicates a record already in the Artist database.");
             System.out.println("|" + song + "| is added to the Song database.");
 
             if (artistTree.hasKVPair(temp[0], temp[1]))
@@ -548,8 +551,8 @@ public class DataBase
         {
             Handle songIndex = hashSong.get(song);
             Handle artistIndex = hashArtist.get(art);
-            System.out.println("|" + art + "| duplicates a record already in the Artist database");
-            System.out.println("|" + song + "| duplicates a record already in the Song database");                       
+            System.out.println("|" + art + "| duplicates a record already in the Artist database.");
+            System.out.println("|" + song + "| duplicates a record already in the Song database.");                       
 
             System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
                     + songIndex.getOff() + "," + artistIndex.getOff() + ") duplicates a record already in the tree.");

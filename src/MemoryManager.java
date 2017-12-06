@@ -204,11 +204,15 @@ public class MemoryManager
         int off = findIndexOfHandle(s);
         if (off != -1)
         {
-            Handle temp = new Handle(off, lengthOfByteArr);
+            Handle temp = new Handle(off - 2, lengthOfByteArr);
             int index = handleArr.indexOf(temp);
-            if (index != -1)
+            //index != -1
+            for (int i = 0; i < handleArr.size(); i++)
             {
-                return handleArr.get(index); 
+                if (handleArr.get(i).getLen() == temp.getLen() && handleArr.get(i).getOff() == temp.getOff())
+                {
+                    return handleArr.get(i); 
+                }
             }
         }
         return null;
