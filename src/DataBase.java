@@ -141,9 +141,9 @@ public class DataBase
                 else if (next.equals("tree"))
                 {
                     //in order traversal of tree
-                    System.out.println("Printing artist tree: ");
+                    System.out.println("Printing artist tree:");
                     artistTree.printTree();
-                    System.out.println("Printing song tree: ");
+                    System.out.println("Printing song tree:");
                     songTree.printTree();
                 }
             }
