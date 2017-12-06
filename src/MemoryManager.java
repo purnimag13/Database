@@ -97,7 +97,6 @@ public class MemoryManager
 
         for (int i = 0; i < offsets.size(); i++)
         {
-            //int x = massiveByteArr.indexOf(offsets.get(i));
             int x = offsets.get(i);
             test = true;
             byte[] temp = Arrays.copyOfRange(tempArr, x, len + x);
@@ -225,7 +224,7 @@ public class MemoryManager
         byte[] stringAsBytes = s.getBytes();
         int lengthOfByteArr = stringAsBytes.length;
         int flag = 1; 
-        int lengthOfRecord = lengthOfByteArr + 2; 
+        int lengthOfRecord = lengthOfByteArr; 
         int end = massiveByteArr.size();
         massiveByteArr.add((byte) flag);
         massiveByteArr.add((byte) lengthOfRecord);
