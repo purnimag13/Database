@@ -56,28 +56,40 @@ public class DataBase
             String lineScanner = scan.nextLine();
             Scanner fileScanner = new Scanner(lineScanner);
             String instruction = fileScanner.next();
-            
+
             if (instruction.equals("insert"))
             {
                 StringBuilder artist = new StringBuilder();
                 StringBuilder songTitle = new StringBuilder();
                 StringBuilder tempString = new StringBuilder();
-                
-                while (!fileScanner.next().contains("<SEP>"))
+
+                String next = fileScanner.next();
+                while (!next.contains("<SEP>"))
                 {
-                    artist.append(fileScanner.next());
+                    artist.append(next);
+                    if (fileScanner.hasNext())
+                    {
+                        artist.append(" ");
+                    }
+                    next = fileScanner.next();
                 }
+                tempString.append(next);
+                tempString.append(" ");
                 while (fileScanner.hasNext())
                 {
-                    tempString.append(fileScanner.next()); 
+                    tempString.append(fileScanner.next());
+                    if (fileScanner.hasNext())
+                    {
+                        tempString.append(" ");
+                    }
                 }
-                String temp = tempString.toString();
-                
-                temp.replace("<SEP>", " ");
-                
-                String sub = temp.substring(0, temp.indexOf(" "));
+                String str = tempString.toString();
+
+                String temp = str.replace("<SEP>", "  ");
+
+                String sub = temp.substring(0, temp.indexOf("  "));
                 artist.append(sub);
-                String sub2 = temp.substring(temp.indexOf(" ") + 1, temp.length());
+                String sub2 = temp.substring(temp.indexOf("  ") + 2, temp.length());
                 String artistString = artist.toString();
                 songTitle.append(sub2);
                 String songTitleString = songTitle.toString();
@@ -141,7 +153,16 @@ public class DataBase
                 if (next.equals("artist"))
                 {
                     HashTable.Entry[] temp = hashSong.getTable();
-                    String artist = fileScanner.next();
+                    StringBuilder str = new StringBuilder();
+                    while (fileScanner.hasNext())
+                    {                        
+                        str.append(fileScanner.next());
+                        if (fileScanner.hasNext())
+                        {
+                            str.append(" ");
+                        }
+                    }
+                    String artist = str.toString();                    
                     ArrayList<Handle> songs = listArtist(artist);//list of song handles
                     if (songs.size() == 0)
                     {
@@ -181,10 +202,49 @@ public class DataBase
             }
             else if (instruction.equals("delete"))
             {
-                String artistName = fileScanner.next();
-                fileScanner.skip("<SEP>");
-                String songName = fileScanner.next();
-                delete(artistName, songName);
+                StringBuilder artist = new StringBuilder();
+                StringBuilder songTitle = new StringBuilder();
+                StringBuilder tempString = new StringBuilder();
+
+                String next = fileScanner.next();
+                while (!next.contains("<SEP>"))
+                {
+                    artist.append(next);
+                    if (fileScanner.hasNext())
+                    {
+                        artist.append(" ");
+                    }
+                    next = fileScanner.next();
+                }
+                tempString.append(next);
+                tempString.append(" ");
+                while (fileScanner.hasNext())
+                {
+                    tempString.append(fileScanner.next());
+                    if (fileScanner.hasNext())
+                    {
+                        tempString.append(" ");
+                    }
+                }
+                String str = tempString.toString();
+
+                String temp = str.replace("<SEP>", "  ");
+
+                String sub = temp.substring(0, temp.indexOf("  "));
+                artist.append(sub);
+                String sub2 = temp.substring(temp.indexOf("  ") + 2, temp.length());
+                String artistString = artist.toString();
+                songTitle.append(sub2);
+                String songTitleString = songTitle.toString();
+                delete(artistString, songTitleString);
+//                StringBuilder str = new StringBuilder();
+//                str.append(fileScanner.next());
+//                str.append(" ");
+//                str.append(fileScanner.next());
+//                String artistName = str.toString();
+//                fileScanner.skip("<SEP>");
+//                String songName = fileScanner.next();
+//                delete(artistName, songName);
             }
         }
         scan.close();
@@ -220,11 +280,7 @@ public class DataBase
      */
     public ArrayList<Handle> listArtist(String s)
     {
-        Handle temp = arr.searchAndReturn(s);
-        if (temp.equals(null))
-        {
-            System.out.println("|" + s + "| does not exist in the Artist database.");  
-        }
+        Handle temp = arr.searchAndReturn(s);        
         ArrayList<Handle> arrHandle = artistTree.findHandlePair(temp);
         return artistTree.orderTree(arrHandle);
     }
@@ -252,7 +308,7 @@ public class DataBase
         Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
         if (!hashArtist.find(obj))
         {
-            System.out.println(obj + " does not exist in the artist database.");
+            System.out.println("|" + obj + "| does not exist in the artist database.");
         }
         else
         {
@@ -289,6 +345,55 @@ public class DataBase
         }
     }
     /**
+     * removes all songs from everything
+     * @param obj song to be removed
+     */
+    public void removeSong(String obj)
+    {
+        Handle offArtK;
+        Handle offArtV;
+        Handle offSongK;
+        Handle offSongV;
+        Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
+        if (!hashSong.find(obj))
+        {
+            System.out.println("|" + obj + "| does not exist in the song database.");
+        }
+        else
+        {
+            arr.remove(obj);
+            hashSong.remove(obj);
+
+            ArrayList<KVPair> deletedArt =  artistTree.remove(temp);//every KV pair associated
+            ArrayList<KVPair> deletedSong = songTree.remove(temp);
+
+            for (int i = 0; i < deletedArt.size(); i++)
+            {
+                offArtK = deletedArt.get(i).getKey();
+                offArtV = deletedArt.get(i).getValue();
+                offSongK = deletedSong.get(i).getKey();
+                offSongV = deletedSong.get(i).getValue();
+                String a1 = hashArtist.getName(offArtK);
+                String a2 = hashArtist.getName(offArtV);
+                String a3 = hashSong.getName(offSongK);
+                String a4 = hashSong.getName(offSongV);
+                System.out.println("The KVPair (|" + a1 + "|,|" + a2 + "|) is deleted from the tree.");
+                System.out.println("The KVPair (|" + a3 + "|,|" + a4 + "|) is deleted from the tree.");
+            }
+            System.out.println("|" + obj + "| is deleted from the Song database.");
+            for (int i = 0; i < deletedArt.size(); i++)
+            {
+                if (songTree.countHandles(deletedArt.get(i).getValue()) == 0)
+                {
+                    String songDeleted = hashArtist.getName(deletedArt.get(i).getValue());
+                    arr.remove(songDeleted);
+                    hashArtist.remove(songDeleted);
+                    System.out.println("|" + songDeleted + "| is deleted from the Artist database.");
+                }
+            }
+        }
+    }
+    /**
      * deletes one instance of a record
      * @param art artist to be deleted
      * @param title song to be deleted
@@ -297,14 +402,20 @@ public class DataBase
     {
         Handle tempArtist;
         Handle tempSong;
+        boolean hasArt = true;
+        boolean hasSong = true;
         if (!hashArtist.find(art))
         {
             System.out.println("|" + art + "| does not exist in the artist database.");
-            return false;
+            hasArt = false;
         }
         if (!hashSong.find(title))
         {
             System.out.println("|" + title + "| does not exist in the song database.");
+            hasSong = false;
+        }
+        if (!hasArt || !hasSong)
+        {
             return false;
         }
         if (arr.searchAndReturn(art) != null && arr.searchAndReturn(title) != null)
@@ -341,55 +452,7 @@ public class DataBase
         }
         return true;
     }
-    /**
-     * removes all songs from everything
-     * @param obj song to be removed
-     */
-    public void removeSong(String obj)
-    {
-        Handle offArtK;
-        Handle offArtV;
-        Handle offSongK;
-        Handle offSongV;
-        Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
-        if (!hashSong.find(obj))
-        {
-            System.out.println(hashSong.get(obj).toString() + " does not exist in the song database.");
-        }
-        else
-        {
-            arr.remove(obj);
-            hashSong.remove(obj);
 
-            ArrayList<KVPair> deletedArt =  artistTree.remove(temp);//every KV pair associated
-            ArrayList<KVPair> deletedSong = songTree.remove(temp);
-
-            for (int i = 0; i < deletedArt.size(); i++)
-            {
-                offArtK = deletedArt.get(i).getKey();
-                offArtV = deletedArt.get(i).getValue();
-                offSongK = deletedSong.get(i).getKey();
-                offSongV = deletedSong.get(i).getValue();
-                String a1 = hashArtist.getName(offArtK);
-                String a2 = hashArtist.getName(offArtV);
-                String a3 = hashSong.getName(offSongK);
-                String a4 = hashSong.getName(offSongV);
-                System.out.println("The KVPair (|" + a1 + "|,|" + a2 + "|) is deleted from the tree.");
-                System.out.println("The KVPair (|" + a3 + "|,|" + a4 + "|) is deleted from the tree.");
-            }
-            System.out.println("|" + obj + "| is deleted from the Song database.");
-            for (int i = 0; i < deletedArt.size(); i++)
-            {
-                if (songTree.countHandles(deletedArt.get(i).getValue()) == 0)
-                {
-                    String songDeleted = hashArtist.getName(deletedArt.get(i).getValue());
-                    arr.remove(songDeleted);
-                    hashArtist.remove(songDeleted);
-                    System.out.println("|" + songDeleted + "| is deleted from the Artist database.");
-                }
-            }
-        }
-    }
     /**
      * inserts to the array
      * hash table and tree
@@ -477,26 +540,34 @@ public class DataBase
         }
         else //both duplicates
         {
+            Handle songIndex = hashSong.get(song);
+            Handle artistIndex = hashArtist.get(art);
             System.out.println("|" + art + "| duplicates a record already in the Artist database");
-            System.out.println("|" + song + "| duplicates a record already in the Song database");
+            System.out.println("|" + song + "| duplicates a record already in the Song database");                       
 
-            if (artistTree.hasKVPair(temp[0], temp[1]))
-            {
-                System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
-                        + temp[0].getOff() + "," + temp[1].getOff() + ") duplicates a record already in the tree.");
-                System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
-                        + temp[1].getOff() + "," + temp[0].getOff() + ") duplicates a record already in the tree.");
-            }
-            else
-            {
-                artistTree.insert(temp[0], temp[1]);
-                songTree.insert(temp[1], temp[0]);
-                System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
-                        + temp[0].getOff() + "," + temp[1].getOff() + ") is added to the tree.");
+            System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
+                    + songIndex.getOff() + "," + artistIndex.getOff() + ") duplicates a record already in the tree.");
+            System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
+                    + artistIndex.getOff() + "," + songIndex.getOff() + ") duplicates a record already in the tree.");
 
-                System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
-                        + temp[1].getOff() + "," + temp[0].getOff() + ") is added to the tree.");
-            }
+            //we don't need this because if they're both null then its definitely a duplicate
+            //            if (artistTree.hasKVPair(temp[0], temp[1]))
+            //            {
+            //                System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
+            //                        + temp[0].getOff() + "," + temp[1].getOff() + ") duplicates a record already in the tree.");
+            //                System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
+            //                        + temp[1].getOff() + "," + temp[0].getOff() + ") duplicates a record already in the tree.");
+            //            }
+            //            else
+            //            {
+            //                artistTree.insert(temp[0], temp[1]);
+            //                songTree.insert(temp[1], temp[0]);
+            //                System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
+            //                        + temp[0].getOff() + "," + temp[1].getOff() + ") is added to the tree.");
+            //
+            //                System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
+            //                        + temp[1].getOff() + "," + temp[0].getOff() + ") is added to the tree.");
+            //            }
         }
     }
 }

@@ -107,7 +107,7 @@ public class HashTable
         {
             if (table[i] != null)
             {
-                if (table[i].getKey() == key)
+                if (table[i].getKey().equals(key))
                 {
                     return table[i].getValue();
                 }
@@ -167,7 +167,7 @@ public class HashTable
         //if we exceed 50% of the hash table used then
         //we double the size of the hash table and reinsert
         //all previous items
-        if (size >= (size/capacity))
+        if (size >= (capacity/2))
         {
             Entry[] temp = this.table;
             this.table = new Entry[capacity * 2];
@@ -181,13 +181,13 @@ public class HashTable
         }
         //Checks to see if key is already in the table
         //Handle blank = new Handle(-1, "TS");
-        if (get(k) != null)
+        if (get(k) == null)
         {
             int slot = quadProbing(k);
             table[slot] = new Entry(k, v);
             size++;
             return table[slot] != null;
-        }
+        }        
         return false;
     }
     /**
