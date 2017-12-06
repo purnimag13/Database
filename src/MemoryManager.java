@@ -204,7 +204,7 @@ public class MemoryManager
         int off = findIndexOfHandle(s);
         if (off != -1)
         {
-            Handle temp = new Handle(off, lengthOfByteArr + 2);
+            Handle temp = new Handle(off, lengthOfByteArr);
             int index = handleArr.indexOf(temp);
             if (index != -1)
             {
