@@ -104,7 +104,8 @@ public class BinarySearchTree<T extends Comparable<? super T>>
      */
     private BinaryNode<T> insert(T x, BinaryNode<T> elemRoot, int currDepth)
     {
-        if (elemRoot == null) {
+        if (elemRoot == null) 
+        {
             return new BinaryNode<T>(x, null, null, currDepth);
         }
 

@@ -454,7 +454,8 @@ public class DataBase
     public void insert(String art, String song)
     {
         Handle[] temp = arr.add(art, song); 
-        if (temp[0] != null && temp[1] != null)//artist and song both inserted
+        
+        if (temp[0] != null && temp[1] != null)//artist and song both need inserted
         {
             hashArtist.insert(art, temp[0]);
             System.out.println("|" + art + "| is added to the Artist database.");
