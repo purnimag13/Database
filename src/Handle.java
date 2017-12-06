@@ -59,7 +59,7 @@ public class Handle implements Comparable<Handle>
      */
     public boolean equals(Handle hand)
     {
-        return off == hand.getOff() && len == hand.getLen();
+        return hand != null && off == hand.getOff() && len == hand.getLen();
     }
     
     @Override
