@@ -311,20 +311,25 @@ public class DataBase
             hashArtist.remove(obj);
 
             ArrayList<KVPair> deletedArt =  artistTree.remove(temp);//every KV pair associated
-            ArrayList<KVPair> deletedSong = songTree.remove(temp);
+            ArrayList<KVPair> deletedSong = songTree.removeAlternate(temp); // needs to compare values here
 
             for (int i = 0; i < deletedArt.size(); i++)
             {
                 offArtK = deletedArt.get(i).getKey();
                 offArtV = deletedArt.get(i).getValue();
+                
                 offSongK = deletedSong.get(i).getKey();
                 offSongV = deletedSong.get(i).getValue();
-                String a1 = hashArtist.getName(offArtK);
-                String a2 = hashArtist.getName(offArtV);
-                String a3 = hashSong.getName(offSongK);
-                String a4 = hashSong.getName(offSongV);
-                System.out.println("The KVPair (|" + a1 + "|,|" + a2 + "|) is deleted from the tree.");
-                System.out.println("The KVPair (|" + a3 + "|,|" + a4 + "|) is deleted from the tree.");
+                
+                int artKeyOffset = offArtK.getOff() - 3;
+                int artKeyLength = offArtK.getLen();
+                String artistName = this.findSong(artKeyOffset, artKeyLength);
+                int songValueOffset = offArtV.getOff() - 3;
+                int songValueLength = offArtV.getOff();
+                String songTitle = this.findSong(songValueOffset, songValueLength);
+              
+                System.out.println("The KVPair (|" + artistName + "|,|" + songTitle + "|) is deleted from the tree.");
+                System.out.println("The KVPair (|" + songTitle + "|,|" + artistName + "|) is deleted from the tree.");
             }
             System.out.println("|" + obj + "| is deleted from the Artist database.");
             for (int i = 0; i < deletedArt.size(); i++)
@@ -338,6 +343,15 @@ public class DataBase
                 }
             }
         }
+    }
+    public String findSong(int offset, int len)
+    {
+        String songName = "";
+        for (int i = 0; i < len; i++)
+        {
+            songName = songName + (char)(this.massiveByteArr.get(i + offset) & 0xFF);
+        }
+        return songName;
     }
     /**
      * removes all songs from everything
@@ -359,7 +373,7 @@ public class DataBase
             arr.remove(obj);
             hashSong.remove(obj);
 
-            ArrayList<KVPair> deletedArt =  artistTree.remove(temp);//every KV pair associated
+            ArrayList<KVPair> deletedArt =  artistTree.removeAlternate(temp);//every KV pair associated
             ArrayList<KVPair> deletedSong = songTree.remove(temp);
 
             for (int i = 0; i < deletedArt.size(); i++)
@@ -401,12 +415,12 @@ public class DataBase
         boolean hasSong = true;
         if (!hashArtist.find(art))
         {
-            System.out.println("|" + art + "| does not exist in the artist database.");
+            System.out.println("|" + art + "| does not exist in the artist tree.");
             hasArt = false;
         }
         if (!hashSong.find(title))
         {
-            System.out.println("|" + title + "| does not exist in the song database.");
+            System.out.println("|" + title + "| does not exist in the song tree.");
             hasSong = false;
         }
         if (!hasArt || !hasSong)
@@ -436,13 +450,13 @@ public class DataBase
             {
                 arr.remove(art);
                 hashArtist.remove(art);
-                System.out.println("|" + art + "| is deleted from the Artist database.");
+                System.out.println("|" + art + "| is deleted from the artist database.");
             }
             if (songTree.countHandles(tempSong) == 0)
             {
                 arr.remove(title);
                 hashSong.remove(title);
-                System.out.println("|" + title + "| is deleted from the Song database.");
+                System.out.println("|" + title + "| is deleted from the song database.");
             }
         }
         return true;

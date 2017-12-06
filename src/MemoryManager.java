@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 /**
@@ -204,9 +205,7 @@ public class MemoryManager
         int off = findIndexOfHandle(s);
         if (off != -1)
         {
-            Handle temp = new Handle(off - 2, lengthOfByteArr);
-            int index = handleArr.indexOf(temp);
-            //index != -1
+            Handle temp = new Handle(off - 3, lengthOfByteArr);
             for (int i = 0; i < handleArr.size(); i++)
             {
                 if (handleArr.get(i).getLen() == temp.getLen() && handleArr.get(i).getOff() == temp.getOff())
@@ -231,7 +230,11 @@ public class MemoryManager
         int lengthOfRecord = lengthOfByteArr; 
         int end = massiveByteArr.size();
         massiveByteArr.add((byte) flag);
-        massiveByteArr.add((byte) lengthOfRecord);
+        byte[] b = ByteBuffer.allocate(4).putInt(lengthOfByteArr).array();
+        for (int i = 2; i < b.length; i++)
+        {
+            massiveByteArr.add(b[i]);
+        }
         for (int i = 0; i < lengthOfByteArr; i++)
         {
             massiveByteArr.add(stringAsBytes[i]);

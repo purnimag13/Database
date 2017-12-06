@@ -93,6 +93,26 @@ public class HashTable
             }
         }
         return "none";
+//        
+//        
+//        Handle h = null;
+//        Handle blank = new Handle(-1, -1);
+//        Entry tombstone = new Entry("Tombstone", blank);
+//        
+//        int hashSlot = hashFunc(key, capacity);
+//        int probeCount = 0;
+//        while (table[hashSlot] != null)
+//        {
+//            probeCount++;
+//            if (table[hashSlot].equals(key))
+//            {
+//                h = table[hashSlot].getValue();
+//                table[hashSlot] = tombstone;
+//                size--; 
+//            }
+//            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
+//        }
+//        return h;
     }
     /**
      * Gets the handle when provided a key value

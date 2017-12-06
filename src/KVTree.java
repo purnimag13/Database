@@ -49,6 +49,26 @@ public class KVTree extends BinarySearchTree<KVPair>
         return list;
     }
     /**
+    * This method removes items of a certain name from the KVTree
+    * @param name the name of what needs to be removed
+    * @return true if the items have been removed
+    */
+   public ArrayList<KVPair> removeAlternate(Handle name)
+   {
+       Iterator<KVPair> itr = this.iterator();
+       ArrayList<KVPair> list = new ArrayList<>();
+       while (itr.hasNext())
+       {
+           KVPair temp = itr.next();
+           if (temp.getValue().equals(name))
+           {
+               list.add(temp);
+               delete(temp);
+           }
+       }
+       return list;
+   }
+    /**
      * This method deletes a particular KVPair from the tree
      * @param k the key handle
      * @param v the value handle
