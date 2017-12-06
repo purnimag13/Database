@@ -108,7 +108,8 @@ public class MemoryManager
                     test = false;
                 }
             }
-            if ((int) tempArr[x - 1] != stringAsBytes.length)
+            int nameLen = (int) tempArr[x - 1];
+            if (nameLen != stringAsBytes.length)
             {
                 test = false;
             }
