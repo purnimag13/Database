@@ -108,6 +108,10 @@ public class MemoryManager
                     test = false;
                 }
             }
+            if ((int) tempArr[x - 1] != stringAsBytes.length)
+            {
+                test = false;
+            }
             if (test)
             {
                 return offsets.get(i);

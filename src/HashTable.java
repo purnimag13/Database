@@ -176,7 +176,10 @@ public class HashTable
             // but I also don't know how else to reinsert
             for (int i = 0; i < temp.length; i++)
             {
-                insert(temp[i].getKey(), temp[i].getValue());                
+                if (temp[i] != null)
+                {
+                    insert(temp[i].getKey(), temp[i].getValue());
+                }
             }
         }
         //Checks to see if key is already in the table
