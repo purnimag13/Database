@@ -201,7 +201,11 @@ public class MemoryManager
         if (off != -1)
         {
             Handle temp = new Handle(off, lengthOfByteArr + 2);
-            return handleArr.get(handleArr.indexOf(temp)); 
+            int index = handleArr.indexOf(temp);
+            if (index != -1)
+            {
+                return handleArr.get(index); 
+            }
         }
         return null;
 
