@@ -207,19 +207,17 @@ public class KVTree extends BinarySearchTree<KVPair>
     }
     public void printTree() 
     {
-        ArrayList<KVPair> arr = makeKVPairList();
-        if (super.getRoot() != null)
+        Iterator<KVPair> itr = this.iterator();
+        
+        while(itr.hasNext())
         {
-            for (KVPair k: arr)
+            KVPair k = itr.next();
+            for (int i = 0; i < super.getHeight(k); i++)
             {
-                for (int i = 0; i < super.getHeight(k); i++)
-                {
-                    System.out.println(" ");
-                }
-                System.out.println("(" + k.getKey().getOff() + "," + k.getValue().getOff() + ")");
+                System.out.print("  ");
             }
-            
-        } 
+            System.out.println("(" + k.getKey().getOff() + "," + k.getValue().getOff() + ")");
+        }
     }
     /**
      * private but still commenting it places the nodes in order
