@@ -42,11 +42,13 @@ public class MemoryManagerTest extends student.TestCase
     public void testAddDupArtist()
     {
         Handle[] test1 = testMM.add(artist, song);
+        art.insert(artist, test1[0]);
+        song1.insert(song, test1[1]);
         Handle[] test2 = testMM.add(artist, "otherSong");
         ArrayList<Handle> arr = testMM.findHandle();
         assertTrue(arr.contains(test1[0]));
         assertTrue(arr.contains(test2[1]));
-        assertFalse(arr.contains(test2[0]));
+        assertNull(test2[0]);
     }
     /**
      * Test add after a handle has been removed
