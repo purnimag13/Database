@@ -131,7 +131,7 @@ public class KVTree extends BinarySearchTree<KVPair>
             KVPair curr = itr.next();
             if (curr.getKey() == h)
             {
-                list.add(h);
+                list.add(curr.getValue());
             }
         }
 
@@ -179,6 +179,10 @@ public class KVTree extends BinarySearchTree<KVPair>
                 if (list.get(i).equals(next.getValue()))
                 {
                     ordered.add(next.getValue());
+                    if (list.size() == ordered.size())
+                    {
+                        return ordered;
+                    }
                 }
             }
         }

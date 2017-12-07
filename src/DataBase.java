@@ -156,7 +156,6 @@ public class DataBase
                 String next = fileScanner.next();
                 if (next.equals("artist"))
                 {
-                    HashTable.Entry[] temp = hashSong.getTable();
                     StringBuilder str = new StringBuilder();
                     while (fileScanner.hasNext())
                     {                        
@@ -174,18 +173,16 @@ public class DataBase
                     }
                     else
                     {
-                        for (int i = 0; i < temp.length; i++)
+                        for (int i = 0; i < songs.size(); i++)
                         {
-                            if (songs.get(i) == temp[i].getValue())
-                            {
-                                System.out.println(temp[i].toString());
-                            }
+                            //get the string associated w handle
+                            String songy = this.findSong(songs.get(i).getOff() + 3, songs.get(i).getLen());
+                            System.out.println("|" + songy + "|");
                         }
                     }
                 }
                 else if (next.equals("song"))
                 {
-                    HashTable.Entry[] temp = hashArtist.getTable();
                     String songs = fileScanner.next();
                     ArrayList<Handle> artists = listSong(songs);
                     if (artists.size() == 0)
@@ -194,12 +191,11 @@ public class DataBase
                     }
                     else
                     {
-                        for (int i = 0; i < temp.length; i++)
+                        for (int i = 0; i < artists.size(); i++)
                         {
-                            if (artists.get(i) == temp[i].getValue())
-                            {
-                                System.out.println(temp[i].toString());
-                            }
+                            //get the string associated w handle
+                            String songy = this.findSong(artists.get(i).getOff() + 3, artists.get(i).getLen());
+                            System.out.println("|" + songy + "|");
                         }
                     }
                 }
@@ -277,7 +273,7 @@ public class DataBase
      */
     public ArrayList<Handle> listArtist(String s)
     {
-        Handle temp = arr.searchAndReturn(s);        
+        Handle temp = hashArtist.get(s);
         ArrayList<Handle> arrHandle = artistTree.findHandlePair(temp);
         return artistTree.orderTree(arrHandle);
     }
@@ -288,7 +284,7 @@ public class DataBase
      */
     public ArrayList<Handle> listSong(String s)
     {
-        Handle temp = arr.searchAndReturn(s);
+        Handle temp = hashSong.get(s);
         ArrayList<Handle> arrHandle = songTree.findHandlePair(temp);
         return songTree.orderTree(arrHandle);
     }
@@ -449,8 +445,8 @@ public class DataBase
         }
         else
         {
-            System.out.println("The KVPair (|" + art + "|,|" + title + "|) was deleted from the database.");
-            System.out.println("The KVPair (|" + title + "|,|" + art + "|) was deleted from the database."); 
+            System.out.println("The KVPair (|" + art + "|,|" + title + "|) is deleted from the tree.");
+            System.out.println("The KVPair (|" + title + "|,|" + art + "|) is deleted from the tree."); 
         }
 
         if (artistTree.countHandles(tempArtist) == 0)

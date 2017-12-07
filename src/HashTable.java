@@ -129,7 +129,11 @@ public class HashTable
             {
                 if (table[i].getKey().equals(key))
                 {
-                    return table[i].getValue();
+                    if (table[i].getKey().length() == key.length())
+                    {
+                        return table[i].getValue();
+                    }
+                    
                 }
             }
         }
