@@ -8,16 +8,19 @@
  */
 public class HashTable
 {
-    public Entry[] table;
+    public Handle[] table;
 
     private int capacity;
 
     private int size;
+    
+    private DataBase data;
 
 
-    public HashTable(int initSize)
+    public HashTable(int initSize, DataBase d)
     {
-        table = new Entry[initSize];
+        data = d;
+        table = new Handle[initSize];
         capacity = initSize;
         size = 0;
     } 
@@ -25,7 +28,7 @@ public class HashTable
      * getter method for table
      * @return table which is an entry[]
      */
-    public Entry[] getTable()
+    public Handle[] getTable()
     {
         return table;
     }
@@ -66,56 +69,22 @@ public class HashTable
      */
     public boolean find(String key)
     {   
-        
+
         int hashSlot = hashFunc(key, capacity);
         int probeCount = 0;
-        while(table[hashSlot] != null)
+        while (table[hashSlot] != null)
         {
             probeCount++;
-            if (table[hashSlot].getKey().equals(key))
-              {
-                  return true;
-              }
+            if (data.findSong(table[hashSlot].getOff() + 3, 
+                    table[hashSlot].getLen()).equals(key))
+            {
+                return true;
+            }
             hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
         }
         return false;
     }
-    /**
-     * Gets the string when provided a handle value
-     * @param h the handle being searched for
-     * @return the string matched with that handle
-     */
-    public String getName(Handle h)
-    {       
-        for (int i = 0; i < capacity; i++)
-        {
-            if (table[i].getValue() == h)
-            {
-                return table[i].getKey();
-            }
-        }
-        return "none";
-//        
-//        
-//        Handle h = null;
-//        Handle blank = new Handle(-1, -1);
-//        Entry tombstone = new Entry("Tombstone", blank);
-//        
-//        int hashSlot = hashFunc(key, capacity);
-//        int probeCount = 0;
-//        while (table[hashSlot] != null)
-//        {
-//            probeCount++;
-//            if (table[hashSlot].equals(key))
-//            {
-//                h = table[hashSlot].getValue();
-//                table[hashSlot] = tombstone;
-//                size--; 
-//            }
-//            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
-//        }
-//        return h;
-    }
+
     /**
      * Gets the handle when provided a key value
      * @param key the key being searched for
@@ -129,52 +98,14 @@ public class HashTable
         while(table[hashSlot] != null)
         {
             probeCount++;
-            if (table[hashSlot].getKey().equals(key))
-              {
-                  h = table[hashSlot].getValue();
-              }
+            if (data.findSong(table[hashSlot].getOff() + 3, 
+                    table[hashSlot].getLen()).equals(key))
+            {
+                h = table[hashSlot];
+            }
             hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
         }
         return h;
-    }
-    /**
-     * Gets the index of a specific key
-     * @param key what you want to find the index of
-     * @return the index or -1 if the string is not in the table
-     */
-    public int getIndex(String key)
-    {
-        for (int i = 0; i < capacity; i++)
-        {
-            if (table[i].getKey() == key)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Method to perform the quadratic 
-     * probing to resolve collision errors
-     * @param k the key of the record being inserted
-     * @return the slot where the value should be hashed
-     */
-    public int quadProbing(String k)
-    {
-        //initial hash slot found by the hashing function
-        int hashSlot = hashFunc(k, capacity);
-        //number of times probing has occurred
-        int probeCount = 0;
-
-        while(table[hashSlot] != null)
-        {
-            probeCount++;
-            // h = h(x) + i^2 % hash table size
-            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
-        }
-
-        return hashSlot;
     }
     /**
      * Inserts a new entry into the hash map and returns
@@ -190,27 +121,36 @@ public class HashTable
         //all previous items
         if (size >= (capacity/2))
         {
-            Entry[] temp = this.table;
-            this.table = new Entry[capacity * 2];
-            this.capacity = capacity * 2;
-            //idk if this works because its recursive and a for loop
-            // but I also don't know how else to reinsert
-            for (int i = 0; i < temp.length; i++)
+           expand();
+        }
+        int hashSlot = hashFunc(k, capacity);
+        int probeCount = 0;
+        while (table[hashSlot] != null && table[hashSlot].getOff() != -1)
+        {
+            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
+            probeCount++;
+        }    
+        table[hashSlot] = v;
+        size++;
+        return table[hashSlot] != null;
+    }
+    /**
+     * expands the hashTable
+     * puts the values back in
+     */
+    public void expand()
+    {
+        Handle[] temp = this.table;
+        this.table = new Handle[capacity * 2];
+        size = 0;
+        this.capacity = capacity * 2;
+        for (int i = 0; i < temp.length; i++)
+        {
+            if (temp[i] != null && temp[i].getOff() != -1)
             {
-                if (temp[i] != null)
-                {
-                    insert(temp[i].getKey(), temp[i].getValue());
-                }
+                insert(data.findSong(temp[i].getOff() + 3, temp[i].getLen()), temp[i]);
             }
         }
-        if (get(k) == null || get(k).getOff() == -1)
-        {
-            int slot = quadProbing(k);
-            table[slot] = new Entry(k, v);
-            size++;
-            return table[slot] != null;
-        }        
-        return false;
     }
     /**
      * Removes items from the hash table if their key matches the key being
@@ -221,19 +161,20 @@ public class HashTable
     public Handle remove(String key)
     {
         Handle h = null;
-        Handle blank = new Handle(-1, -1);
-        Entry tombstone = new Entry("Tombstone", blank);
-        
+        Handle tombstone = new Handle(-1, -1);
+
         int hashSlot = hashFunc(key, capacity);
         int probeCount = 0;
         while (table[hashSlot] != null)
         {
             probeCount++;
-            if (table[hashSlot].getKey().equals(key))
+            if (table[hashSlot].getOff() != -1 && data.findSong(table[hashSlot].getOff() + 3, 
+                    table[hashSlot].getLen()).equals(key))
             {
-                h = table[hashSlot].getValue();
+                h = table[hashSlot];
                 table[hashSlot] = tombstone;
                 size--; 
+                break;
             }
             hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
         }
@@ -247,9 +188,9 @@ public class HashTable
     {
         for (int i = 0; i < this.capacity; i++)
         {
-            if (table[i] != null && !table[i].getKey().equals("Tombstone"))
+            if (table[i] != null && table[i].getOff() != -1)
             {
-                System.out.println("|" + this.getTable()[i].getKey() + "|"
+                System.out.println("|" + data.findSong(table[i].getOff() + 3, table[i].getLen()) + "|"
                         + " " + i); 
             }
         }
@@ -271,51 +212,5 @@ public class HashTable
     {
         return this.size;
     }
-    /**
-     * The entry class that takes a generic key and generic value
-     * @author Purnima Ghosh and Tara Laughlin
-     * @version Nov 19, 2017
-     *
-     * @param <K> the generic key type
-     * @param <V> the generic value type
-     */
-    public class Entry
-    {
-        private String key;
-        private Handle value;
-
-        public Entry(String k, Handle v)
-        {
-            this.key = k;
-            this.value = v;
-        }
-
-        public String getKey() 
-        {
-            return key;
-        }
-
-        public void setKey(String key) 
-        {
-            this.key = key;
-        }
-
-        public Handle getValue() 
-        {
-            return value;
-        }
-
-        public void setValue(Handle value) 
-        {
-            this.value = value;
-        }
-
-        /**
-         * @return string to String
-         */
-        public String suckADick()
-        {
-            return " |" + key + "| "; 
-        }
-    }
+    
 }

@@ -32,8 +32,8 @@ public class DataBase
         massiveByteArr = new ArrayList<>();
 
 
-        hashArtist = new HashTable(hashSize);
-        hashSong = new HashTable(hashSize);
+        hashArtist = new HashTable(hashSize, this);
+        hashSong = new HashTable(hashSize, this);
         arr = new MemoryManager(hashArtist, hashSong);
         handArr = arr.findHandle();
         artistTree = new KVTree();
@@ -140,11 +140,13 @@ public class DataBase
                 String next = fileScanner.next();
                 if (next.equals("artist"))
                 {
-                    printArtist();
+                    hashArtist.print();
+                    System.out.println("total artists: " + hashArtist.getSize());
                 }
                 else if (next.equals("song"))
                 {
-                    printSong();
+                    hashSong.print();
+                    System.out.println("total songs: " + hashSong.getSize());
                 }
                 else if (next.equals("tree"))
                 {
@@ -254,34 +256,10 @@ public class DataBase
                 artistString = artistString.trim();
                 songTitleString = songTitleString.trim();
                 delete(artistString, songTitleString);
-                //                StringBuilder str = new StringBuilder();
-                //                str.append(fileScanner.next());
-                //                str.append(" ");
-                //                str.append(fileScanner.next());
-                //                String artistName = str.toString();
-                //                fileScanner.skip("<SEP>");
-                //                String songName = fileScanner.next();
-                //                delete(artistName, songName);
             }
             fileScanner.close();
         }
         scan.close();
-    }
-    /**
-     * prints all of the songs in the hash table
-     */
-    public void printSong()
-    {
-        hashSong.print();        
-        System.out.println("total songs: " + hashSong.getSize());
-    }
-    /**
-     * prints all the artists in the hash table
-     */
-    public void printArtist()
-    {
-        hashArtist.print();
-        System.out.println("total artists: " + hashArtist.getSize());
     }
     /**
      * lists all the songs by this artist
@@ -292,7 +270,7 @@ public class DataBase
     {
         Handle temp = hashArtist.get(s);
         ArrayList<Handle> arrHandle = artistTree.findHandlePair(temp);
-        return artistTree.orderTree(arrHandle);
+        return arrHandle;
     }
     /**
      * lists all the artists who sing this song
@@ -303,7 +281,7 @@ public class DataBase
     {
         Handle temp = hashSong.get(s);
         ArrayList<Handle> arrHandle = songTree.findHandlePair(temp);
-        return songTree.orderTree(arrHandle);
+        return arrHandle;
     }
     /**
      * removes all artists from everything
