@@ -95,6 +95,8 @@ public class DataBase
                 String artistString = artist.toString();
                 songTitle.append(sub2);
                 String songTitleString = songTitle.toString();
+                artistString = artistString.trim();
+                songTitleString = songTitleString.trim();
                 insert(artistString, songTitleString);
             }
             else if (instruction.equals("remove"))
@@ -113,6 +115,7 @@ public class DataBase
                         }
                     }
                     String obj = str.toString();
+                    obj = obj.trim();
                     removeArtist(obj);
                 }
                 else if (next.equals("song"))
@@ -128,6 +131,7 @@ public class DataBase
                         }
                     }
                     String obj = str.toString();
+                    obj = obj.trim();
                     removeSong(obj);
                 }
             }
@@ -165,7 +169,8 @@ public class DataBase
                             str.append(" ");
                         }
                     }
-                    String artist = str.toString();                    
+                    String artist = str.toString(); 
+                    artist = artist.trim();
                     ArrayList<Handle> songs = listArtist(artist);//list of song handles
                     if (songs.size() == 0)
                     {
@@ -193,6 +198,7 @@ public class DataBase
                         }
                     }
                     String songs = str.toString();  
+                    songs = songs.trim();
                     ArrayList<Handle> artists = listSong(songs);
                     if (artists.size() == 0)
                     {
@@ -245,6 +251,8 @@ public class DataBase
                 String artistString = artist.toString();
                 songTitle.append(sub2);
                 String songTitleString = songTitle.toString();
+                artistString = artistString.trim();
+                songTitleString = songTitleString.trim();
                 delete(artistString, songTitleString);
                 //                StringBuilder str = new StringBuilder();
                 //                str.append(fileScanner.next());

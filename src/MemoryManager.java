@@ -156,9 +156,6 @@ public class MemoryManager
         {
             byte[] stringAsBytes = s.getBytes();
             
-            Handle temp = artHash.get(s);
-            Handle temp1 = songHash.get(s);
-            
             int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
             massiveByteArr.set(index - 2, (byte) 0);
             Handle temp = new Handle(index - 2, stringAsBytes.length + 2);

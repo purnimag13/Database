@@ -65,18 +65,20 @@ public class HashTable
      * @return true or false depending 
      */
     public boolean find(String key)
-    {
-        for (int i = 0; i < capacity; i++)
+    {   
+        
+        int hashSlot = hashFunc(key, capacity);
+        int probeCount = 0;
+        while(table[hashSlot] != null)
         {
-            if (table[i] != null)
-            {
-                if (table[i].getKey().equals(key))
-                {
-                    return true;
-                }
-            }
+            probeCount++;
+            if (table[hashSlot].getKey().equals(key))
+              {
+                  return true;
+              }
+            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
         }
-        return false;    
+        return false;
     }
     /**
      * Gets the string when provided a handle value
@@ -201,9 +203,7 @@ public class HashTable
                 }
             }
         }
-        //Checks to see if key is already in the table
-        //Handle blank = new Handle(-1, "TS");
-        if (get(k) == null || get(k).equals("Tombstone"))
+        if (get(k) == null || get(k).getOff() == -1)
         {
             int slot = quadProbing(k);
             table[slot] = new Entry(k, v);
