@@ -122,35 +122,18 @@ public class HashTable
     public Handle get(String key)
     {
         Handle h = null;
-
-        for (int i = 0; i < capacity; i++)
+        int hashSlot = hashFunc(key, capacity);
+        int probeCount = 0;
+        while(table[hashSlot] != null)
         {
-            if (table[i] != null)
-            {
-                if (table[i].getKey().equals(key))
-                {
-                    if (table[i].getKey().length() == key.length())
-                    {
-                        return table[i].getValue();
-                    }
-                    
-                }
-            }
+            probeCount++;
+            if (table[hashSlot].getKey().equals(key))
+              {
+                  h = table[hashSlot].getValue();
+              }
+            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
         }
         return h;
-//        Handle h = null;
-//        int hashSlot = hashFunc(key, capacity);
-//        int probeCount = 0;
-//        while (table[hashSlot] != null)
-//        {
-//            probeCount++;
-//            if (table[hashSlot].equals(key))
-//            {
-//                return table[hashSlot].getValue();
-//            }
-//            hashSlot = (hashSlot + (probeCount * probeCount)) % capacity;
-//        }
-//        return h;
     }
     /**
      * Gets the index of a specific key
@@ -220,7 +203,7 @@ public class HashTable
         }
         //Checks to see if key is already in the table
         //Handle blank = new Handle(-1, "TS");
-        if (get(k) == null)
+        if (get(k) == null || get(k).equals("Tombstone"))
         {
             int slot = quadProbing(k);
             table[slot] = new Entry(k, v);

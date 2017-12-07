@@ -183,7 +183,16 @@ public class DataBase
                 }
                 else if (next.equals("song"))
                 {
-                    String songs = fileScanner.next();
+                    StringBuilder str = new StringBuilder();
+                    while (fileScanner.hasNext())
+                    {                        
+                        str.append(fileScanner.next());
+                        if (fileScanner.hasNext())
+                        {
+                            str.append(" ");
+                        }
+                    }
+                    String songs = str.toString();  
                     ArrayList<Handle> artists = listSong(songs);
                     if (artists.size() == 0)
                     {
@@ -322,9 +331,12 @@ public class DataBase
 
                 int artKeyOffset = offArtK.getOff() + 3;
                 int artKeyLength = offArtK.getLen();
+                
                 String artistName = this.findSong(artKeyOffset, artKeyLength);
+                
                 int songValueOffset = offArtV.getOff() + 3;
                 int songValueLength = offArtV.getLen();
+                
                 String songTitle = this.findSong(songValueOffset, songValueLength);
 
                 System.out.println("The KVPair (|" + artistName + "|,|" + songTitle + "|) is deleted from the tree.");
@@ -364,7 +376,7 @@ public class DataBase
         Handle offArtV;
         Handle offSongK;
         Handle offSongV;
-        Handle temp = arr.searchAndReturn(obj);//handle of artist looked for
+        Handle temp = hashSong.get(obj);
         if (!hashSong.find(obj))
         {
             System.out.println("|" + obj + "| does not exist in the song database.");
@@ -377,25 +389,33 @@ public class DataBase
             ArrayList<KVPair> deletedArt =  artistTree.removeAlternate(temp);//every KV pair associated
             ArrayList<KVPair> deletedSong = songTree.remove(temp);
 
-            for (int i = 0; i < deletedArt.size(); i++)
+            for (int i = 0; i < deletedSong.size(); i++)
             {
                 offArtK = deletedArt.get(i).getKey();
                 offArtV = deletedArt.get(i).getValue();
                 offSongK = deletedSong.get(i).getKey();
                 offSongV = deletedSong.get(i).getValue();
-                String a1 = hashArtist.getName(offArtK);
-                String a2 = hashArtist.getName(offArtV);
-                String a3 = hashSong.getName(offSongK);
-                String a4 = hashSong.getName(offSongV);
-                System.out.println("The KVPair (|" + a1 + "|,|" + a2 + "|) is deleted from the tree.");
-                System.out.println("The KVPair (|" + a3 + "|,|" + a4 + "|) is deleted from the tree.");
+                
+                int artKeyOffset = offArtK.getOff() + 3;
+                int artKeyLength = offArtK.getLen();
+                
+                String artistName = this.findSong(artKeyOffset, artKeyLength);
+                
+                int songValueOffset = offArtV.getOff() + 3;
+                int songValueLength = offArtV.getLen();
+                
+                String songTitle = this.findSong(songValueOffset, songValueLength);
+                System.out.println("The KVPair (|" + songTitle + "|,|" + artistName + "|) is deleted from the tree.");
+                System.out.println("The KVPair (|" + artistName + "|,|" + songTitle + "|) is deleted from the tree.");
             }
             System.out.println("|" + obj + "| is deleted from the Song database.");
-            for (int i = 0; i < deletedArt.size(); i++)
+            for (int i = 0; i < deletedSong.size(); i++)
             {
-                if (songTree.countHandles(deletedArt.get(i).getValue()) == 0)
+                if (songTree.countHandles(deletedSong.get(i).getValue()) == 0)
                 {
-                    String songDeleted = hashArtist.getName(deletedArt.get(i).getValue());
+                    int x = deletedSong.get(i).getValue().getOff() + 3;
+                    int y = deletedSong.get(i).getValue().getLen();
+                    String songDeleted = this.findSong(x, y);
                     arr.remove(songDeleted);
                     hashArtist.remove(songDeleted);
                     System.out.println("|" + songDeleted + "| is deleted from the Artist database.");
