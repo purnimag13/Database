@@ -195,22 +195,6 @@ public class BinarySearchTree<T extends Comparable<? super T>>
     }
 
     /**
-     * Function to find the minimum value
-     * @param elemRoot Root destination. 
-     * @return Minimum object. 
-     */
-    T minValue(BinaryNode<T> elemRoot)
-    {
-        T minv = elemRoot.element;
-        while (elemRoot.left != null)
-        {
-            minv = elemRoot.left.element;
-            elemRoot = elemRoot.left;
-        }
-        return minv;
-    }
-
-    /**
      * Private binary node class. 
      * 
      * @author Alexander James Bochel and Purnima Ghosh
@@ -344,35 +328,6 @@ public class BinarySearchTree<T extends Comparable<? super T>>
 
         //check if the node is present in the right sub tree
         return getNodeHeight(sRoot.right, x, height + 1);
-    }
-
-    /**
-     * This method finds the size of the tree. 
-     * 
-     * @return The size of the tree. 
-     */
-    public int size()
-    {
-        return size(root);
-    }
-    
-
-    /**
-     * This method is the helper method to find the size of
-     * the tree. 
-     * @param node
-     * @return The size of the tree. 
-     */
-    private int size(BinaryNode<T> node)
-    {
-        if (node == null)
-        {
-            return 0;
-        }
-        else
-        {
-            return (size(node.left) + 1 + size(node.right));
-        }
     }
 
     @Override

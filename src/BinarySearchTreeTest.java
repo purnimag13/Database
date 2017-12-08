@@ -80,7 +80,16 @@ public class BinarySearchTreeTest extends student.TestCase {
 		assertFalse(tree.insert(x));
 	} 
 	/**
-	 * 
+     * Tests another case of insert
+     */
+    public void testInsert2()
+    {
+        BinarySearchTree<String> empty = new BinarySearchTree<>();
+        boolean x = empty.insert(null);
+        assertFalse(x);
+    }
+	/**
+	 * Tests the delete method
 	 */
 	public void testDelete()
 	{   
@@ -106,7 +115,7 @@ public class BinarySearchTreeTest extends student.TestCase {
 		assertTrue(tree.isEmpty());
 	}
 	/**
-	 * 
+	 * tests another part of delete 
 	 */
 	public void testDelete1()
 	{
@@ -116,5 +125,4 @@ public class BinarySearchTreeTest extends student.TestCase {
 
 		assertTrue(tree.isEmpty());
 	}
-
 }
