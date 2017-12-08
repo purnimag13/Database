@@ -22,7 +22,7 @@ public class Handle implements Comparable<Handle>
     }
     /**
      * gets the offset
-     * @return int offset
+     * @return int offset thing
      */
     public int getOff() 
     {
@@ -46,7 +46,7 @@ public class Handle implements Comparable<Handle>
     }
     /**
      * sets the length of offset
-     * @param len length
+     * @param length length of thing
      */
     public void setLen(int length) 
     {

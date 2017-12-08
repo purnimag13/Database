@@ -12,7 +12,9 @@ public class KVPairTest extends student.TestCase
     private KVPair kv;
     private KVPair less;
     private KVPair more;
-    
+    /**
+     * sets up the tests
+     */
     public void setUp()
     {
         Handle kvh1 = new Handle(4, 4);

@@ -2,21 +2,23 @@
  * This is the hash table class
  * @author Purnima Ghosh and Tara Laughlin
  * @version Nov 19, 2017
- *
- * @param <string> the key type
- * @param <Handle> the value type
  */
 public class HashTable
 {
-    public Handle[] table;
+    private Handle[] table;
 
     private int capacity;
 
     private int size;
-    
+
     private DataBase data;
 
 
+    /**
+     * hash table constructor this class stores artists and songs
+     * @param initSize initial size
+     * @param d database to be looked at
+     */
     public HashTable(int initSize, DataBase d)
     {
         data = d;
@@ -95,7 +97,7 @@ public class HashTable
         Handle h = null;
         int hashSlot = hashFunc(key, capacity);
         int probeCount = 0;
-        while(table[hashSlot] != null)
+        while (table[hashSlot] != null)
         {
             probeCount++;
             if (data.findSong(table[hashSlot].getOff() + 3, 
@@ -119,9 +121,9 @@ public class HashTable
         //if we exceed 50% of the hash table used then
         //we double the size of the hash table and reinsert
         //all previous items
-        if (size >= (capacity/2))
+        if (size >= (capacity / 2))
         {
-           expand();
+            expand();
         }
         int hashSlot = hashFunc(k, capacity);
         int probeCount = 0;
@@ -148,7 +150,8 @@ public class HashTable
         {
             if (temp[i] != null && temp[i].getOff() != -1)
             {
-                insert(data.findSong(temp[i].getOff() + 3, temp[i].getLen()), temp[i]);
+                insert(data.findSong(temp[i].getOff() + 3, 
+                        temp[i].getLen()), temp[i]);
             }
         }
     }
@@ -168,8 +171,9 @@ public class HashTable
         while (table[hashSlot] != null)
         {
             probeCount++;
-            if (table[hashSlot].getOff() != -1 && data.findSong(table[hashSlot].getOff() + 3, 
-                    table[hashSlot].getLen()).equals(key))
+            if (table[hashSlot].getOff() != -1 && 
+                    data.findSong(table[hashSlot].getOff() + 3, 
+                            table[hashSlot].getLen()).equals(key))
             {
                 h = table[hashSlot];
                 table[hashSlot] = tombstone;
@@ -190,7 +194,8 @@ public class HashTable
         {
             if (table[i] != null && table[i].getOff() != -1)
             {
-                System.out.println("|" + data.findSong(table[i].getOff() + 3, table[i].getLen()) + "|"
+                System.out.println("|" + data.findSong(table[i].getOff() + 3, 
+                        table[i].getLen()) + "|"
                         + " " + i); 
             }
         }
@@ -212,5 +217,5 @@ public class HashTable
     {
         return this.size;
     }
-    
+
 }

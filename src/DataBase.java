@@ -12,8 +12,6 @@ import java.util.Scanner;
  */
 public class DataBase 
 {
-    private Scanner scan;
-
     private MemoryManager arr;
 
     private HashTable hashArtist;
@@ -23,6 +21,8 @@ public class DataBase
     private KVTree songTree;
     /**
      * database constructor
+     * @param hashSize size of hash table
+     * @param blockSize blockSize for array
      */
     public DataBase(int hashSize, int blockSize)
     {
@@ -40,6 +40,7 @@ public class DataBase
      */
     public void readFile(String fileName) throws FileNotFoundException
     {
+        Scanner scan;
         File file = new File(fileName);
         scan = new Scanner(file);
         while (scan.hasNextLine() && scan.hasNext())
@@ -350,6 +351,12 @@ public class DataBase
             }
         }
     }
+    /**
+     * finds the string that is associated with the offset / handle
+     * @param offset offset of handle
+     * @param len length of handle
+     * @return String that is associated
+     */
     public String findSong(int offset, int len)
     {
         String songName = "";
@@ -368,7 +375,9 @@ public class DataBase
     {
         Handle offArtK;
         Handle offArtV;
+        @SuppressWarnings("unused")
         Handle offSongK;
+        @SuppressWarnings("unused")
         Handle offSongV;
         Handle temp = hashSong.get(obj);
         if (!hashSong.find(obj))
@@ -427,6 +436,7 @@ public class DataBase
      * deletes one instance of a record
      * @param art artist to be deleted
      * @param title song to be deleted
+     * @return boolean returned true or false if deleted
      */
     public boolean delete(String art, String title)
     {
@@ -457,16 +467,20 @@ public class DataBase
 
         if (!checkArt && !checkSong)
         {
-            System.out.println("The KVPair (|" + art + "|,|" + title + "|) was "
+            System.out.println("The KVPair (|" + art + "|,|" + title + "|) "
+                    + "was "
                     + "not found in the database.");
-            System.out.println("The KVPair (|" + title + "|,|" + art + "|) was "
+            System.out.println("The KVPair (|" + title + "|,|" + art + "|) "
+                    + "was "
                     + "not found in the database.");
         }
         else
         {
-            System.out.println("The KVPair (|" + art + "|,|" + title + "|) is "
+            System.out.println("The KVPair (|" + art + "|,|" + title + "|) "
+                    + "is "
                     + "deleted from the tree.");
-            System.out.println("The KVPair (|" + title + "|,|" + art + "|) is "
+            System.out.println("The KVPair (|" + title + "|,|" + art + "|) "
+                    + "is "
                     + "deleted from the tree."); 
         }
 
@@ -523,11 +537,11 @@ public class DataBase
             songTree.insert(temp[1], temp[0]);
             System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
                     + temp[0].getOff() + "," + temp[1].getOff() + ") is added "
-                            + "to the tree.");
+                    + "to the tree.");
 
             System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
                     + temp[1].getOff() + "," + temp[0].getOff() + ") is added "
-                            + "to the tree.");
+                    + "to the tree.");
 
 
         }
@@ -544,11 +558,11 @@ public class DataBase
             songTree.insert(oldSong, temp[0]);
             System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
                     + temp[0].getOff() + "," + oldSong.getOff() + ") is added "
-                            + "to the tree.");
+                    + "to the tree.");
 
             System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
                     + oldSong.getOff() + "," + temp[0].getOff() + ") is added "
-                            + "to the tree.");
+                    + "to the tree.");
 
         }
         else if (temp[0] == null && temp[1] != null)
@@ -558,17 +572,18 @@ public class DataBase
 
             System.out.println("|" + art + "| duplicates a record already in "
                     + "the Artist database.");
-            System.out.println("|" + song + "| is added to the Song database.");
+            System.out.println("|" + song + "| is added to the Song "
+                    + "database.");
 
             artistTree.insert(oldArtist, temp[1]);
             songTree.insert(temp[1], oldArtist);
             System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
                     + oldArtist.getOff() + "," + temp[1].getOff() + ") is "
-                            + "added to the tree.");
+                    + "added to the tree.");
 
             System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
                     + temp[1].getOff() + "," + oldArtist.getOff() + ") is "
-                            + "added to the tree.");
+                    + "added to the tree.");
 
         }
         else //both duplicates
@@ -582,24 +597,32 @@ public class DataBase
 
             if (artistTree.hasKVPair(artistIndex, songIndex))
             {
-                System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
-                        + artistIndex.getOff() + "," + songIndex.getOff() + ") "
-                                + "duplicates a record already in the tree.");
-                System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
-                        + songIndex.getOff() + "," + artistIndex.getOff() + ") "
-                                + "duplicates a record already in the tree.");
+                System.out.println("The KVPair (|" + art + "|,|" + 
+                        song + "|),(" 
+                        + artistIndex.getOff() + "," + songIndex.getOff() 
+                        + ") "
+                        + "duplicates a record already in the tree.");
+                System.out.println("The KVPair (|" + song + "|,|" + art 
+                        + "|),(" 
+                        + songIndex.getOff() + "," + artistIndex.getOff() 
+                        + ") "
+                        + "duplicates a record already in the tree.");
             }
             else
             {
                 artistTree.insert(artistIndex, songIndex);
                 songTree.insert(songIndex, artistIndex);
-                System.out.println("The KVPair (|" + art + "|,|" + song + "|),(" 
-                        + artistIndex.getOff() + "," + songIndex.getOff() + ") "
-                                + "is added to the tree.");
+                System.out.println("The KVPair (|" + art + "|,|" + 
+                        song + "|),(" 
+                        + artistIndex.getOff() + "," + 
+                        songIndex.getOff() + ") "
+                        + "is added to the tree.");
 
-                System.out.println("The KVPair (|" + song + "|,|" + art + "|),(" 
-                        + songIndex.getOff() + "," + artistIndex.getOff() + ") "
-                                + "is added to the tree.");
+                System.out.println("The KVPair (|" + song + "|,|" + 
+                        art + "|),(" 
+                        + songIndex.getOff() + "," + 
+                        artistIndex.getOff() + ") "
+                        + "is added to the tree.");
             }
 
         }

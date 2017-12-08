@@ -1,11 +1,16 @@
-
+/**
+ * this tests the handle class
+ * @author purnima gosh
+ * @author taralaughlin
+ *
+ */
 public class HandleTest extends student.TestCase
 {
-    Handle hand;
-    Handle empty;
-    Handle hand2;
-    Handle hand3;
-    Handle hand4;
+    private Handle hand;
+    private Handle empty;
+    private Handle hand2;
+    private Handle hand3;
+    private Handle hand4;
     
     /**
      * constructor for handle class

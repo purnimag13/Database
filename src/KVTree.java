@@ -49,25 +49,25 @@ public class KVTree extends BinarySearchTree<KVPair>
         return list;
     }
     /**
-    * This method removes items of a certain name from the KVTree
-    * @param name the name of what needs to be removed
-    * @return true if the items have been removed
-    */
-   public ArrayList<KVPair> removeAlternate(Handle name)
-   {
-       Iterator<KVPair> itr = this.iterator();
-       ArrayList<KVPair> list = new ArrayList<>();
-       while (itr.hasNext())
-       {
-           KVPair temp = itr.next();
-           if (temp.getValue().equals(name))
-           {
-               list.add(temp);
-               delete(temp);
-           }
-       }
-       return list;
-   }
+     * This method removes items of a certain name from the KVTree
+     * @param name the name of what needs to be removed
+     * @return true if the items have been removed
+     */
+    public ArrayList<KVPair> removeAlternate(Handle name)
+    {
+        Iterator<KVPair> itr = this.iterator();
+        ArrayList<KVPair> list = new ArrayList<>();
+        while (itr.hasNext())
+        {
+            KVPair temp = itr.next();
+            if (temp.getValue().equals(name))
+            {
+                list.add(temp);
+                delete(temp);
+            }
+        }
+        return list;
+    }
     /**
      * This method deletes a particular KVPair from the tree
      * @param k the key handle
@@ -159,7 +159,7 @@ public class KVTree extends BinarySearchTree<KVPair>
         }
         return list;
     }    
-   
+
     /**
      * This method finds if the given kvpair exists in the tree
      * @param k the key handle
@@ -183,7 +183,7 @@ public class KVTree extends BinarySearchTree<KVPair>
     public void printTree() 
     {
         Iterator<KVPair> itr = this.iterator();
-        
+
         while(itr.hasNext())
         {
             KVPair k = itr.next();
@@ -193,33 +193,5 @@ public class KVTree extends BinarySearchTree<KVPair>
             }
             System.out.println("(" + k.getKey().getOff() + "," + k.getValue().getOff() + ")");
         }
-    }
-    /**
-     * private but still commenting it places the nodes in order
-     * 
-     * @param n
-     *            the binary node to place
-     */
-    private ArrayList<KVPair> inOrder(BinaryNode<KVPair> n)
-    {
-        ArrayList<KVPair> arr = new ArrayList<>();
-        if (n == null)
-        {
-            return null;
-        }
-        if (n.getLeft() != null)
-        {
-            inOrder(n.getLeft());
-        }
-        arr.add(n.getElement());
-        if (n.getRight() != null)
-        {
-            inOrder(n.getRight());
-        }
-        return arr;
-    }
-    private ArrayList<KVPair> makeKVPairList() 
-    {
-        return inOrder(super.getRoot());
     }
 }

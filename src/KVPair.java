@@ -1,8 +1,5 @@
 /**
- * 
- */
-
-/**
+ * kv Pairs for the trees
  * @author Purnima Ghosh and Tara Laughlin
  * @version Nov 16, 2017
  *
@@ -12,6 +9,11 @@ public class KVPair implements Comparable<KVPair>
     private Handle key;
     private Handle value;
 
+    /**
+     * kv pairs things that hold the handles
+     * @param k key handle
+     * @param v value handle
+     */
     public KVPair(Handle k, Handle v)
     {
         key = k;

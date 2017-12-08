@@ -1,4 +1,3 @@
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 /**
@@ -10,12 +9,14 @@ import java.util.Arrays;
 public class MemoryManager 
 {
     ArrayList<Byte> massiveByteArr;
-    ArrayList<Handle> handleArr;
-    HashTable artHash;
-    HashTable songHash;
+    private ArrayList<Handle> handleArr;
+    private HashTable artHash;
+    private HashTable songHash;
 
     /**
      * memory manager constructor
+     * @param art HashTable artist
+     * @param song hashTable song
      */
     public MemoryManager(HashTable art, HashTable song)
     {
@@ -54,13 +55,13 @@ public class MemoryManager
         }
         else // if you can find it, check the flag
         {
-//            if (!checkFlagValid(art))
-//            {
-//                int off = addToArray(art);
-//                artistHandle = makeNewHandle(art, off);
-//                handleArr.add(artistHandle); 
-//                pair[0] = artistHandle;
-//            }
+            //            if (!checkFlagValid(art))
+            //            {
+            //                int off = addToArray(art);
+            //                artistHandle = makeNewHandle(art, off);
+            //                handleArr.add(artistHandle); 
+            //                pair[0] = artistHandle;
+            //            }
             pair[0] = null;
         }
         if (!songHash.find(song))
@@ -72,13 +73,13 @@ public class MemoryManager
         }
         else
         {
-//            if (!checkFlagValid(song))
-//            {
-//                int off = addToArray(song);
-//                songHandle = makeNewHandle(song, off);
-//                handleArr.add(songHandle); 
-//                pair[1] = songHandle;
-//            }
+            //            if (!checkFlagValid(song))
+            //            {
+            //                int off = addToArray(song);
+            //                songHandle = makeNewHandle(song, off);
+            //                handleArr.add(songHandle); 
+            //                pair[1] = songHandle;
+            //            }
             pair[1] = null;
         }
         return pair;
@@ -100,7 +101,8 @@ public class MemoryManager
         byte[] stringAsBytes = s.getBytes();
         int len = stringAsBytes.length;
         boolean test = true;
-        ArrayList<Integer> offsets = indexOfAll(stringAsBytes[0], massiveByteArr);
+        ArrayList<Integer> offsets = 
+                indexOfAll(stringAsBytes[0], massiveByteArr);
 
         for (int i = 0; i < offsets.size(); i++)
         {
@@ -136,8 +138,12 @@ public class MemoryManager
     {
         ArrayList<Integer> indexList = new ArrayList<Integer>();
         for (int i = 0; i < list.size(); i++)
-            if(obj.equals(list.get(i)))
+        {
+            if (obj.equals(list.get(i)))
+            {
                 indexList.add(i);
+            }
+        }
         return indexList;
     }
     /**
@@ -146,8 +152,7 @@ public class MemoryManager
      * finds flag and changes it to zero
      * removes the old handle from the handle array 
      * to avoid confusion when a new one is added
-     * @param art artist to be removed
-     * @param song song to be looked at
+     * @param s song to be looked at
      * @return boolean true or false
      */
     public boolean remove(String s)
@@ -155,7 +160,7 @@ public class MemoryManager
         if (findIndexOfHandle(s) != -1)
         {
             byte[] stringAsBytes = s.getBytes();
-            
+
             int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
             massiveByteArr.set(index - 2, (byte) 0);
             Handle temp = new Handle(index - 2, stringAsBytes.length + 2);
