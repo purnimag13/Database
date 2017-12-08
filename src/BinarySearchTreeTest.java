@@ -1,14 +1,14 @@
 /**
  * This test class tests the BinarySearchTree class.
  * 
- * @author Alexander James Bochel
+ * @author Purnima Ghosh and Tara Laughlin
  * @version 9.21.2017
  * 
  */
 public class BinarySearchTreeTest extends student.TestCase {
 
     private BinarySearchTree<String> tree;
-	private String x;
+    private String x;
 	private String y; 
 	private String z; 
 
@@ -85,8 +85,8 @@ public class BinarySearchTreeTest extends student.TestCase {
     public void testInsert2()
     {
         BinarySearchTree<String> empty = new BinarySearchTree<>();
-        boolean x = empty.insert(null);
-        assertFalse(x);
+        boolean hello = empty.insert(null);
+        assertFalse(hello);
     }
 	/**
 	 * Tests the delete method
