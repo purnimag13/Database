@@ -161,7 +161,7 @@ public class MemoryManager
         {
             byte[] stringAsBytes = s.getBytes();
 
-            int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
+            int index = findIndexOfHandle(s);
             massiveByteArr.set(index - 2, (byte) 0);
             Handle temp = new Handle(index - 2, stringAsBytes.length + 2);
             for (int i = 0; i < handleArr.size(); i++)
@@ -181,9 +181,9 @@ public class MemoryManager
      * @param s string searched for
      * @return true if 1 false if 0
      */
-    public boolean checkFlagValid(String s)//under assumption we already know handle exists
+    public boolean checkFlagValid(String s)
     {
-        int index = findIndexOfHandle(s);//we may need to check for duplicate string bytes
+        int index = findIndexOfHandle(s);
         if (massiveByteArr.get(index - 2) == 0)
         {
             return false;
@@ -220,7 +220,8 @@ public class MemoryManager
             Handle temp = new Handle(off - 3, lengthOfByteArr);
             for (int i = 0; i < handleArr.size(); i++)
             {
-                if (handleArr.get(i).getLen() == temp.getLen() && handleArr.get(i).getOff() == temp.getOff())
+                if (handleArr.get(i).getLen() == temp.getLen() && 
+                        handleArr.get(i).getOff() == temp.getOff())
                 {
                     return handleArr.get(i); 
                 }
