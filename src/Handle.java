@@ -52,15 +52,7 @@ public class Handle implements Comparable<Handle>
     {
         this.len = length;
     }
-    /**
-     * compares if two handles are equal
-     * @param hand hangle to be compared
-     * @return boolean true or false
-     */
-    public boolean equals(Handle hand)
-    {
-        return hand != null && off == hand.getOff() && len == hand.getLen();
-    }
+
     
     @Override
     public int compareTo(Handle hand) 
