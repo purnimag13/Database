@@ -362,7 +362,7 @@ public class DataBase
         String songName = "";
         for (int i = 0; i < len; i++)
         {
-            songName = songName + (char)(this.arr.massiveByteArr.get(i + 
+            songName = songName + (char)(this.arr.getArray().get(i + 
                     offset) & 0xFF);
         }
         return songName;

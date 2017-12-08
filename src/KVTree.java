@@ -118,8 +118,8 @@ public class KVTree extends BinarySearchTree<KVPair>
      * every time handle h appears in the tree
      * as the KEY
      * append the Value handle attached to it
-     * @param h
-     * @return
+     * @param h handle that you need d
+     * @return ArrayList<Handle> of the pairs of ahndles
      */
     public ArrayList<Handle> findHandlePair(Handle h)
     {
@@ -137,28 +137,6 @@ public class KVTree extends BinarySearchTree<KVPair>
 
         return list;
     }
-    /**
-     * This method returns a list of all values associated with the searched
-     * key. If the key was an artist this method would search through the tree
-     * and add all songs that had that artist as a key to a list and then 
-     * return that list
-     * @param k the key being searched for
-     * @return a list of value handles
-     */
-    public ArrayList<Handle> list(Handle k)
-    {
-        Iterator<KVPair> itr = this.iterator();
-        ArrayList<Handle> list = new ArrayList<>();
-        while (itr.hasNext())
-        {
-            KVPair temp = itr.next();
-            if (temp.getKey().equals(k))
-            {
-                list.add(temp.getValue());
-            }
-        }
-        return list;
-    }    
 
     /**
      * This method finds if the given kvpair exists in the tree
@@ -180,18 +158,22 @@ public class KVTree extends BinarySearchTree<KVPair>
         }
         return false;
     }
+    /**
+     * prints the tree
+     */
     public void printTree() 
     {
         Iterator<KVPair> itr = this.iterator();
 
-        while(itr.hasNext())
+        while (itr.hasNext())
         {
             KVPair k = itr.next();
             for (int i = 0; i < super.getHeight(k); i++)
             {
                 System.out.print("  ");
             }
-            System.out.println("(" + k.getKey().getOff() + "," + k.getValue().getOff() + ")");
+            System.out.println("(" + k.getKey().getOff() + "," + 
+                    k.getValue().getOff() + ")");
         }
     }
 }

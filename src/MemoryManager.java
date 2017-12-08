@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class MemoryManager 
 {
-    ArrayList<Byte> massiveByteArr;
+    private ArrayList<Byte> massiveByteArr;
     private ArrayList<Handle> handleArr;
     private HashTable artHash;
     private HashTable songHash;
@@ -24,6 +24,14 @@ public class MemoryManager
         handleArr = new ArrayList<>();
         artHash = art;
         songHash = song;
+    }
+    /**
+     * getter for array list
+     * @return ArrayList<Byte> 
+     */
+    public ArrayList<Byte> getArray()
+    {
+        return massiveByteArr;
     }
     /**
      * gives other things access to the list of handles
@@ -175,21 +183,7 @@ public class MemoryManager
         }
         return false;
     }
-    /**
-     * if the handle exists in the array
-     * this finds its flag and checks if its valid
-     * @param s string searched for
-     * @return true if 1 false if 0
-     */
-    public boolean checkFlagValid(String s)
-    {
-        int index = findIndexOfHandle(s);
-        if (massiveByteArr.get(index - 2) == 0)
-        {
-            return false;
-        }
-        return true;
-    }
+
     /**
      * makes a new handle with the information provided
      * aka the string that is the artist or song 
@@ -204,32 +198,7 @@ public class MemoryManager
         Handle temp = new Handle(offset, lengthOfByteArr);
         return temp;
     }
-    /**
-     * returns the handle of the string that
-     * is being searched for
-     * @param s string searched
-     * @return Handle looked for
-     */
-    public Handle searchAndReturn(String s)
-    {
-        byte[] stringAsBytes = s.getBytes();
-        int lengthOfByteArr = stringAsBytes.length;
-        int off = findIndexOfHandle(s);
-        if (off != -1)
-        {
-            Handle temp = new Handle(off - 3, lengthOfByteArr);
-            for (int i = 0; i < handleArr.size(); i++)
-            {
-                if (handleArr.get(i).getLen() == temp.getLen() && 
-                        handleArr.get(i).getOff() == temp.getOff())
-                {
-                    return handleArr.get(i); 
-                }
-            }
-        }
-        return null;
 
-    }
     /**
      * returns the offset of what was just added to the byte array
      * @param s string to be added
